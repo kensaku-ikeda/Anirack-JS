@@ -1,0 +1,7 @@
+{
+  "editor.inlineSuggest.enabled": false,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "css.styleSheets": ["css/*.css"],
+  "remote.autoForwardPortsFallback": 0
+}

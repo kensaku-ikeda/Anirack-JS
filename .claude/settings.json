@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(//home/kensaku/projects/anime-manga-log/**)",
+      "Write(//home/kensaku/projects/anime-manga-log/**)",
+      "NotebookEdit",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git reset:*)",
+      "Bash(git checkout:*)",
+      "Bash(git restore:*)",
+      "mcp__plugin_desktop-commander_desktop-commander__write_file",
+      "mcp__plugin_desktop-commander_desktop-commander__edit_block",
+      "mcp__plugin_desktop-commander_desktop-commander__move_file",
+      "mcp__plugin_desktop-commander_desktop-commander__create_directory",
+      "mcp__plugin_desktop-commander_desktop-commander__start_process"
+    ],
+    "allow": [
+      "Edit(~/.claude/projects/-home-kensaku-projects-anime-manga-log/memory/**)",
+      "Write(~/.claude/projects/-home-kensaku-projects-anime-manga-log/memory/**)",
+      "Bash(git log:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git show:*)"
+    ]
+  }
+}

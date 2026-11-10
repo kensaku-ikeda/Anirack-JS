@@ -1,4 +1,4 @@
-# anime-manga-log 要件定義書
+# Anirack-JS 要件定義書
 
 アニメや漫画の記録ができるアプリを素のHTML/CSS/JSで作る。
 目的はlocalstorageや非同期処理など、reactに進む前にJavaScriptの土台固めをするため。

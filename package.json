@@ -1,14 +1,14 @@
 {
-  "name": "anime-manga-log",
+  "name": "anirack",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://github.com/kensaku-ikeda/anime-manga-log#readme",
+  "homepage": "https://github.com/kensaku-ikeda/Anirack-JS#readme",
   "bugs": {
-    "url": "https://github.com/kensaku-ikeda/anime-manga-log/issues"
+    "url": "https://github.com/kensaku-ikeda/Anirack-JS/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kensaku-ikeda/anime-manga-log.git"
+    "url": "git+https://github.com/kensaku-ikeda/Anirack-JS.git"
   },
   "license": "ISC",
   "author": "",

@@ -40,3 +40,21 @@
   /* タップ領域の最小値 */
   --tap: 44px;
 }
+/* ローカルフォント */
+@font-face {
+  font-family: "Dela Gothic One";
+  src: url(/fonts/DelaGothicOne-Regular.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "M PLUS Rounded 1c";
+  src: url(/fonts/MPLUSRounded1c-Medium.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "M PLUS Rounded 1c-bold";
+  src: url(/fonts/MPLUSRounded1c-ExtraBold.ttf);
+  font-display: swap;
+}

@@ -22,6 +22,8 @@
   --space-6: 24px;
   --space-7: 28px;
 
+  /* 上下端を避ける */
+
   /* ボーダー */
   --border-s: 2px solid var(--color-ink);
   --border-m: 3px solid var(--color-ink);
@@ -104,3 +106,22 @@ main {
 }
 
 /* 画面下側 */
+.bottom-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 96px;
+  padding-top: 16px;
+  background-color: var(--color-ink);
+}
+
+.record {
+  height: 52px;
+  padding: 0 28px;
+  background: var(--color-yellow);
+  border: var(--border-m);
+  box-shadow: 0 0 0 2px var(--color-yellow);
+  font: 17px var(--font-display);
+  transform: rotate(-2deg);
+}

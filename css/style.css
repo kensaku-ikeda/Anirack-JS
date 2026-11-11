@@ -58,3 +58,8 @@
   src: url(/fonts/MPLUSRounded1c-ExtraBold.ttf);
   font-display: swap;
 }
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

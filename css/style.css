@@ -62,6 +62,13 @@ body {
   font-family: var(--font-body);
   background: var(--halftone);
 }
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
 h1,
 h2,
 button {

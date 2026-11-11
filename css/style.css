@@ -98,4 +98,9 @@ input:focus {
   outline: none;
 }
 
+/* メイン */
+main {
+  overflow: auto;
+}
+
 /* 画面下側 */

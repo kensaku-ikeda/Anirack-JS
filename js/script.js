@@ -20,6 +20,7 @@ input.addEventListener("input", () => {
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // フォームのページリロードを無効
   const title = form.elements["content-title"].value;
+  const UUID = crypto.randomUUID();
   // 空白のみの場合は保存できないようにする
   if (title.trim() === "") {
     input.setCustomValidity("タイトルを入力してください");
@@ -27,6 +28,7 @@ form.addEventListener("submit", (event) => {
   } else {
     const contentRecord = {
       title: title,
+      id: UUID,
     };
     anirackContentRecords.push(contentRecord);
     renderList();

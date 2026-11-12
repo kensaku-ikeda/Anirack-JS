@@ -19,10 +19,10 @@ input.addEventListener("input", () => {
 
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // フォームのページリロードを無効
-  const title = form.elements["content-title"].value;
+  const title = form.elements["content-title"].value.trim();
   const UUID = crypto.randomUUID();
   // 空白のみの場合は保存できないようにする
-  if (title.trim() === "") {
+  if (title === "") {
     input.setCustomValidity("タイトルを入力してください");
     input.reportValidity();
   } else {
@@ -31,6 +31,7 @@ form.addEventListener("submit", (event) => {
       id: UUID,
     };
     anirackContentRecords.push(contentRecord);
+    form.reset();
     renderList();
     localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
   }

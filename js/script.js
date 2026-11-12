@@ -9,11 +9,7 @@ let anirackContentRecords = [];
 const local = localStorage.getItem("Records");
 if (local) {
   anirackContentRecords = JSON.parse(local);
-  anirackContentRecords.forEach((contentRecord) => {
-    const li = document.createElement("li");
-    li.textContent = contentRecord.title;
-    list.appendChild(li);
-  });
+  renderList();
 }
 
 // 間違った形式で入力しても、入力し直して保存できる
@@ -23,19 +19,29 @@ input.addEventListener("input", () => {
 
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // フォームのページリロードを無効
-  const title = form.elements["content-title"].value;
-  const li = document.createElement("li");
+  const title = form.elements["content-title"].value.trim();
+  const UUID = crypto.randomUUID();
   // 空白のみの場合は保存できないようにする
-  if (title.trim() === "") {
+  if (title === "") {
     input.setCustomValidity("タイトルを入力してください");
     input.reportValidity();
   } else {
-    li.textContent = title;
-    list.appendChild(li);
     const contentRecord = {
       title: title,
+      id: UUID,
     };
     anirackContentRecords.push(contentRecord);
+    form.reset();
+    renderList();
     localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
   }
 });
+
+function renderList() {
+  list.textContent = "";
+  anirackContentRecords.forEach((contentRecord) => {
+    const li = document.createElement("li");
+    li.textContent = contentRecord.title;
+    list.appendChild(li);
+  });
+}

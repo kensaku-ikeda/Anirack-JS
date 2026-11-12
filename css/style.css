@@ -100,6 +100,28 @@ input:focus {
   outline: none;
 }
 
+/* トップ */
+.app-header {
+  width: 100%;
+  padding: 52px var(--space-5) 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.logo {
+  margin: 0;
+  font-size: 30px;
+  background-color: var(--color-yellow);
+  border: var(--border-m);
+  padding: var(--space-1) var(--space-2);
+  transform: rotate(-2deg);
+}
+
+.work-count {
+  font: var() 12px var(--font-body);
+}
+
 /* メイン */
 main {
   overflow: auto;
@@ -107,10 +129,6 @@ main {
 
 /* 画面下側 */
 .bottom-bar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
   height: 96px;
   padding-top: 16px;
   background-color: var(--color-ink);

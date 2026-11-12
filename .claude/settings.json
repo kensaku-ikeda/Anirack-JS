@@ -4,8 +4,6 @@
       "Edit(//home/kensaku/projects/anime-manga-log/**)",
       "Write(//home/kensaku/projects/anime-manga-log/**)",
       "NotebookEdit",
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
       "Bash(git reset:*)",
       "Bash(git checkout:*)",
       "Bash(git restore:*)",

@@ -2,8 +2,10 @@
 const form = document.querySelector("form");
 const list = document.querySelector(".title-list");
 const input = document.getElementById("title");
+const titleRename = document.getElementById("title-rename");
 const dialog = document.querySelector("dialog");
-const close = document.querySelector(".cancel-btn");
+const cancelBtn = document.querySelector(".cancel-btn");
+const saveBtn = document.querySelector(".save-btn");
 
 // グローバル変数
 let contentRenameDialogId;
@@ -49,25 +51,41 @@ function renderList() {
     const li = document.createElement("li");
     li.textContent = contentRecord.title;
     list.appendChild(li);
+    renderEditButton(contentRecord.id, contentRecord.title, li);
     renderDeleteButton(contentRecord.id, li);
-    renderEditButton(contentRecord.id, li);
   });
 }
 
 // 編集ボタン
-function renderEditButton(uuid, contentLiElement) {
+function renderEditButton(uuid, contentTitle, contentLiElement) {
   const button = document.createElement("button");
   contentLiElement.appendChild(button);
   button.textContent = "編集";
   button.addEventListener("click", () => {
+    titleRename.value = contentTitle;
     contentRenameDialogId = uuid;
     dialog.showModal();
   });
 }
 
 // キャンセルボタン
-close.addEventListener("click", () => {
+cancelBtn.addEventListener("click", () => {
   dialog.close();
+});
+
+// 保存ボタン
+saveBtn.addEventListener("click", () => {
+  const renameInput = titleRename.value.trim();
+  anirackContentRecords = anirackContentRecords.map((contentRecord) => {
+    if (contentRecord.id === contentRenameDialogId && renameInput !== "") {
+      contentRecord.title = renameInput;
+    }
+    return contentRecord;
+  });
+  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+  titleRename.value = "";
+  dialog.close();
+  renderList();
 });
 
 // 削除ボタン

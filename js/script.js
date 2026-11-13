@@ -6,9 +6,9 @@ const input = document.getElementById("title");
 // 作品のデータを保存するための配列
 let anirackContentRecords = [];
 
-const local = localStorage.getItem("Records");
-if (local) {
-  anirackContentRecords = JSON.parse(local);
+const savedRecords = localStorage.getItem("Records");
+if (savedRecords) {
+  anirackContentRecords = JSON.parse(savedRecords);
   renderList();
 }
 
@@ -20,7 +20,7 @@ input.addEventListener("input", () => {
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // フォームのページリロードを無効
   const title = form.elements["content-title"].value.trim();
-  const UUID = crypto.randomUUID();
+  const uuid = crypto.randomUUID();
   // 空白のみの場合は保存できないようにする
   if (title === "") {
     input.setCustomValidity("タイトルを入力してください");
@@ -28,7 +28,7 @@ form.addEventListener("submit", (event) => {
   } else {
     const contentRecord = {
       title: title,
-      id: UUID,
+      id: uuid,
     };
     anirackContentRecords.push(contentRecord);
     form.reset();
@@ -37,11 +37,27 @@ form.addEventListener("submit", (event) => {
   }
 });
 
+// 入力されたタイトルをリストとして画面に表示
 function renderList() {
   list.textContent = "";
   anirackContentRecords.forEach((contentRecord) => {
     const li = document.createElement("li");
     li.textContent = contentRecord.title;
     list.appendChild(li);
+    renderDeleteButton(contentRecord.id, li);
+  });
+}
+
+// 削除ボタン
+function renderDeleteButton(uuid, contentLiElement) {
+  const button = document.createElement("button");
+  contentLiElement.appendChild(button);
+  button.textContent = "削除";
+  button.addEventListener("click", () => {
+    anirackContentRecords = anirackContentRecords.filter((contentRecord) => {
+      return uuid !== contentRecord.id;
+    });
+    localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+    renderList();
   });
 }

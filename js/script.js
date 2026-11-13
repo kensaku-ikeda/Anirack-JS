@@ -2,6 +2,11 @@
 const form = document.querySelector("form");
 const list = document.querySelector(".title-list");
 const input = document.getElementById("title");
+const dialog = document.querySelector("dialog");
+const close = document.querySelector(".cancel-btn");
+
+// グローバル変数
+let contentRenameDialogId;
 
 // 作品のデータを保存するための配列
 let anirackContentRecords = [];
@@ -45,8 +50,25 @@ function renderList() {
     li.textContent = contentRecord.title;
     list.appendChild(li);
     renderDeleteButton(contentRecord.id, li);
+    renderEditButton(contentRecord.id, li);
   });
 }
+
+// 編集ボタン
+function renderEditButton(uuid, contentLiElement) {
+  const button = document.createElement("button");
+  contentLiElement.appendChild(button);
+  button.textContent = "編集";
+  button.addEventListener("click", () => {
+    contentRenameDialogId = uuid;
+    dialog.showModal();
+  });
+}
+
+// キャンセルボタン
+close.addEventListener("click", () => {
+  dialog.close();
+});
 
 // 削除ボタン
 function renderDeleteButton(uuid, contentLiElement) {

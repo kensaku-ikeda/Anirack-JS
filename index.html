@@ -4,8 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Anirack</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <div class="top">
+      <div class="container">
+        <div class="app-header">
+          <h1 class="logo">Anirack</h1>
+          <p class="work-count">8作品</p>
+        </div>
+      </div>
+    </div>
+
     <main>
       <dialog class="dialog">
         <div class="dialog-container">
@@ -27,7 +38,6 @@
       </dialog>
 
       <div class="container">
-        <h1 class="app-title">Anirack</h1>
         <form>
           <label for="title"
             >タイトル
@@ -44,6 +54,12 @@
         <ul class="title-list"></ul>
       </div>
     </main>
+
+    <div class="bottom-bar">
+      <div class="container">
+        <button class="record" type="button">＋記録する</button>
+      </div>
+    </div>
     <script src="js/script.js" defer></script>
   </body>
 </html>

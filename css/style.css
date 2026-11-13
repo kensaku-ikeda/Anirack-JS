@@ -1,0 +1,145 @@
+:root {
+  /* 色 */
+  --color-ink: #111111;
+  --color-paper: #ffffff;
+  --color-yellow: #ffe600;
+  --color-pink: #ff2e88;
+  --color-blue: #3d5afe;
+  --color-error: #c4006a;
+  --color-muted: #767676;
+  --color-dot: #e4e4e4;
+  --color-overlay: rgba(17, 17, 17, 0.6);
+
+  /* フォント */
+  --font-display: "Dela Gothic One", sans-serif;
+  --font-body: "M PLUS Rounded 1c", sans-serif;
+
+  /* 画面の余白 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+
+  /* 上下端を避ける */
+
+  /* ボーダー */
+  --border-s: 2px solid var(--color-ink);
+  --border-m: 3px solid var(--color-ink);
+
+  /* 影 */
+  --shadow-s: 3px 3px 0 var(--color-ink);
+  --shadow-sheet: 0 -6px 0 var(--color-yellow);
+
+  /* 吹き出し */
+  --radius-bubble: 24px 24px 24px 4px;
+
+  /* 背景の網点 */
+  --halftone: radial-gradient(var(--color-dot) 1.2px, transparent 1.3px) 0 0 /
+    9px 9px;
+
+  /* タップ領域の最小値 */
+  --tap: 44px;
+}
+
+/* ローカルフォント */
+@font-face {
+  font-family: "Dela Gothic One";
+  src: url(/fonts/DelaGothicOne-Regular.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "M PLUS Rounded 1c";
+  src: url(/fonts/MPLUSRounded1c-Medium.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "M PLUS Rounded 1c-bold";
+  src: url(/fonts/MPLUSRounded1c-ExtraBold.ttf);
+  font-display: swap;
+}
+
+body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  height: 100dvh;
+  font-family: var(--font-body);
+  background: var(--halftone);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+h1,
+h2,
+button {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+/* ページのスタイル */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form input {
+  border: none;
+  border-bottom: var(--border-m);
+}
+
+input:focus {
+  outline: none;
+}
+
+/* トップ */
+.app-header {
+  width: 100%;
+  padding: 52px var(--space-5) 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.logo {
+  margin: 0;
+  font-size: 30px;
+  background-color: var(--color-yellow);
+  border: var(--border-m);
+  padding: var(--space-1) var(--space-2);
+  transform: rotate(-2deg);
+}
+
+.work-count {
+  font: var() 12px var(--font-body);
+}
+
+/* メイン */
+main {
+  overflow: auto;
+}
+
+/* 画面下側 */
+.bottom-bar {
+  height: 96px;
+  padding-top: 16px;
+  background-color: var(--color-ink);
+}
+
+.record {
+  height: 52px;
+  padding: 0 28px;
+  background: var(--color-yellow);
+  border: var(--border-m);
+  box-shadow: 0 0 0 2px var(--color-yellow);
+  font: 17px var(--font-display);
+  transform: rotate(-2deg);
+}

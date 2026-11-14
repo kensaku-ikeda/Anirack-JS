@@ -18,7 +18,7 @@
     </div>
 
     <main>
-      <dialog class="dialog">
+      <dialog class="dialog edit">
         <div class="dialog-container">
           <label for="title-rename"
             >タイトル
@@ -31,26 +31,31 @@
             />
           </label>
           <div class="dialog-btn">
-            <button class="cancel-btn">キャンセル</button>
+            <button class="edit-cancel-btn">✕</button>
             <button class="save-btn">保存</button>
           </div>
         </div>
       </dialog>
 
       <div class="container">
-        <form>
-          <label for="title"
-            >タイトル
-            <input
-              type="text"
-              id="title"
-              name="content-title"
-              placeholder="作品の名前を入力してください"
-              required
-            />
-          </label>
-          <button type="submit">追加</button>
-        </form>
+        <dialog class="dialog add">
+          <div class="dialog-container">
+            <button class="add-cancel-btn">✕</button>
+            <form>
+              <label for="title"
+                >タイトル
+                <input
+                  type="text"
+                  id="title"
+                  name="content-title"
+                  placeholder="作品の名前を入力してください"
+                  required
+                />
+              </label>
+              <button type="submit">追加</button>
+            </form>
+          </div>
+        </dialog>
         <ul class="title-list"></ul>
       </div>
     </main>

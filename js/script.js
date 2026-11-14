@@ -112,6 +112,13 @@ record.addEventListener("click", () => {
   add.showModal();
 });
 
+add.addEventListener("click", (event) => {
+  //暗い部分のみをクリックしたら閉じるようにする
+  if (event.target === add) {
+    add.close();
+  }
+});
+
 addCancelBtn.addEventListener("click", () => {
   add.close();
 });

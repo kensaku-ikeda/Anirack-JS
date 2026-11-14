@@ -2,10 +2,13 @@
 const form = document.querySelector("form");
 const list = document.querySelector(".title-list");
 const input = document.getElementById("title");
+const record = document.querySelector(".record");
 const titleRename = document.getElementById("title-rename");
-const dialog = document.querySelector("dialog");
-const cancelBtn = document.querySelector(".cancel-btn");
+const edit = document.querySelector(".edit");
+const add = document.querySelector(".add");
 const saveBtn = document.querySelector(".save-btn");
+const addCancelBtn = document.querySelector(".add-cancel-btn");
+const editCancelBtn = document.querySelector(".edit-cancel-btn");
 
 // グローバル変数
 let contentRenameDialogId;
@@ -24,6 +27,14 @@ input.addEventListener("input", () => {
   input.setCustomValidity("");
 });
 
+record.addEventListener("click", () => {
+  add.showModal();
+});
+
+addCancelBtn.addEventListener("click", () => {
+  add.close();
+});
+
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // フォームのページリロードを無効
   const title = form.elements["content-title"].value.trim();
@@ -39,6 +50,7 @@ form.addEventListener("submit", (event) => {
     };
     anirackContentRecords.push(contentRecord);
     form.reset();
+    add.close();
     renderList();
     localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
   }
@@ -64,13 +76,13 @@ function renderEditButton(uuid, contentTitle, contentLiElement) {
   button.addEventListener("click", () => {
     titleRename.value = contentTitle;
     contentRenameDialogId = uuid;
-    dialog.showModal();
+    edit.showModal();
   });
 }
 
 // キャンセルボタン
-cancelBtn.addEventListener("click", () => {
-  dialog.close();
+editCancelBtn.addEventListener("click", () => {
+  edit.close();
 });
 
 // 保存ボタン
@@ -84,7 +96,7 @@ saveBtn.addEventListener("click", () => {
   });
   localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
   titleRename.value = "";
-  dialog.close();
+  edit.close();
   renderList();
 });
 

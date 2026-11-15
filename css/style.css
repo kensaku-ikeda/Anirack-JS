@@ -134,7 +134,7 @@ main {
   background-color: var(--color-ink);
 }
 
-.record {
+.open-add-dialog-btn {
   height: 52px;
   padding: 0 28px;
   background: var(--color-yellow);

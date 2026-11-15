@@ -2,7 +2,7 @@
 const form = document.querySelector("form");
 const list = document.querySelector(".title-list");
 const input = document.getElementById("title");
-const record = document.querySelector(".record");
+const openAddDialogBtn = document.querySelector(".open-add-dialog-btn");
 const titleRename = document.getElementById("title-rename");
 const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
@@ -108,7 +108,7 @@ function renderDeleteButton(uuid, contentLiElement) {
 }
 
 // モーダルの開閉
-record.addEventListener("click", () => {
+openAddDialogBtn.addEventListener("click", () => {
   addDialog.showModal();
 });
 

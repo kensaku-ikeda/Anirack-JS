@@ -13,6 +13,7 @@
   /* フォント */
   --font-display: "Dela Gothic One", sans-serif;
   --font-body: "M PLUS Rounded 1c", sans-serif;
+  --font-body-bold: "M PLUS Rounded 1c-bold", sans-serif;
 
   /* 画面の余白 */
   --space-1: 4px;
@@ -159,6 +160,14 @@ main {
   display: flex;
   justify-content: space-between;
   border-bottom: var(--border-m);
+}
+
+.label-text {
+  display: block;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  font-family: var(--font-body-bold);
 }
 
 .btn-tap-size {

@@ -3,6 +3,7 @@ const form = document.querySelector("form");
 const list = document.querySelector(".title-list");
 const input = document.getElementById("title");
 const titleRename = document.getElementById("title-rename");
+const editReviewText = document.getElementById("edit-review-text");
 const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
 const editSaveBtn = document.querySelector(".edit-save-btn");
@@ -26,6 +27,7 @@ input.addEventListener("input", () => {
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // フォームのページリロードを無効
   const title = form.elements["content-title"].value.trim();
+  const review = form.elements["content-review"].value.trim();
   const uuid = crypto.randomUUID();
   // 空白のみの場合は保存できないようにする
   if (title === "") {
@@ -34,6 +36,7 @@ form.addEventListener("submit", (event) => {
   } else {
     const contentRecord = {
       title: title,
+      review: review,
       id: uuid,
     };
     anirackContentRecords.push(contentRecord);
@@ -59,19 +62,25 @@ function renderList() {
     const li = document.createElement("li");
     li.textContent = contentRecord.title;
     list.appendChild(li);
-    renderEditButton(contentRecord.id, contentRecord.title, li);
+    renderEditButton(
+      contentRecord.id,
+      contentRecord.title,
+      contentRecord.review,
+      li,
+    );
     renderDeleteButton(contentRecord.id, li);
   });
 }
 
 // U（Update / 更新）
 // タイトルごとに編集ボタンを作る関数、押すと編集ダイアログが開く
-function renderEditButton(uuid, contentTitle, contentLiElement) {
+function renderEditButton(uuid, contentTitle, contentReview, contentLiElement) {
   const button = document.createElement("button");
   contentLiElement.appendChild(button);
   button.textContent = "編集";
   button.addEventListener("click", () => {
     titleRename.value = contentTitle;
+    editReviewText.value = contentReview;
     contentRenameDialogId = uuid;
     editDialog.showModal();
   });
@@ -80,16 +89,25 @@ function renderEditButton(uuid, contentTitle, contentLiElement) {
 // 既存のデータを書き換えて保存する
 editSaveBtn.addEventListener("click", () => {
   const renameInput = titleRename.value.trim();
-  anirackContentRecords = anirackContentRecords.map((contentRecord) => {
-    if (contentRecord.id === contentRenameDialogId && renameInput !== "") {
-      contentRecord.title = renameInput;
-    }
-    return contentRecord;
-  });
-  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
-  titleRename.value = "";
-  editDialog.close();
-  renderList();
+  const rewriteReviewText = editReviewText.value.trim();
+
+  if (renameInput === "") {
+    titleRename.setCustomValidity("タイトルを入力してください");
+    titleRename.reportValidity();
+  } else {
+    anirackContentRecords = anirackContentRecords.map((contentRecord) => {
+      if (contentRecord.id === contentRenameDialogId) {
+        contentRecord.title = renameInput;
+        contentRecord.review = rewriteReviewText;
+      }
+      return contentRecord;
+    });
+    localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+    titleRename.value = "";
+    editReviewText.value = "";
+    editDialog.close();
+    renderList();
+  }
 });
 
 // D（Delete / 削除）

@@ -143,3 +143,12 @@ main {
   font: 17px var(--font-display);
   transform: rotate(-2deg);
 }
+
+.dialog {
+  margin: auto 0 0 0;
+  width: 100%;
+  max-width: none;
+  border: none;
+  border-top: var(--border-m);
+  box-shadow: var(--shadow-sheet);
+}

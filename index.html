@@ -20,6 +20,11 @@
     <main>
       <dialog class="dialog edit-dialog">
         <div class="dialog-container">
+          <div class="dialog-header">
+            <button class="edit-cancel-btn btn-tap-size">✕</button>
+            <h2>編集する</h2>
+            <div class="btn-tap-size"></div>
+          </div>
           <label for="title-rename"
             >タイトル
             <input
@@ -40,7 +45,6 @@
             ></textarea>
           </label>
           <div class="dialog-btn">
-            <button class="edit-cancel-btn">✕</button>
             <button class="edit-save-btn">保存</button>
           </div>
         </div>
@@ -49,7 +53,11 @@
       <div class="container">
         <dialog class="dialog add-dialog">
           <div class="dialog-container">
-            <button class="add-cancel-btn">✕</button>
+            <div class="dialog-header">
+              <button class="add-cancel-btn btn-tap-size">✕</button>
+              <h2>新しい作品</h2>
+              <div class="btn-tap-size"></div>
+            </div>
             <form>
               <label for="title"
                 >タイトル
@@ -71,7 +79,9 @@
                   placeholder="感想を入力してください"
                 ></textarea>
               </label>
-              <button type="submit">追加</button>
+              <div class="dialog-btn">
+                <button type="submit">追加</button>
+              </div>
             </form>
           </div>
         </dialog>

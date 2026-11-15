@@ -155,6 +155,17 @@ main {
   box-shadow: var(--shadow-sheet);
 }
 
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: var(--border-m);
+}
+
+.btn-tap-size {
+  width: var(--tap);
+  height: var(--tap);
+}
+
 .review-text-area {
   width: 100%;
   padding: var(--space-3) var(--space-4);

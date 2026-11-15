@@ -3,6 +3,7 @@ const form = document.querySelector("form");
 const list = document.querySelector(".title-list");
 const input = document.getElementById("title");
 const titleRename = document.getElementById("title-rename");
+const editReviewText = document.getElementById("edit-review-text");
 const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
 const editSaveBtn = document.querySelector(".edit-save-btn");
@@ -61,19 +62,25 @@ function renderList() {
     const li = document.createElement("li");
     li.textContent = contentRecord.title;
     list.appendChild(li);
-    renderEditButton(contentRecord.id, contentRecord.title, li);
+    renderEditButton(
+      contentRecord.id,
+      contentRecord.title,
+      contentRecord.review,
+      li,
+    );
     renderDeleteButton(contentRecord.id, li);
   });
 }
 
 // U（Update / 更新）
 // タイトルごとに編集ボタンを作る関数、押すと編集ダイアログが開く
-function renderEditButton(uuid, contentTitle, contentLiElement) {
+function renderEditButton(uuid, contentTitle, contentReview, contentLiElement) {
   const button = document.createElement("button");
   contentLiElement.appendChild(button);
   button.textContent = "編集";
   button.addEventListener("click", () => {
     titleRename.value = contentTitle;
+    editReviewText.value = contentReview;
     contentRenameDialogId = uuid;
     editDialog.showModal();
   });

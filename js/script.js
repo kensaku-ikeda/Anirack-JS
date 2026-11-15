@@ -6,7 +6,7 @@ const openAddDialogBtn = document.querySelector(".open-add-dialog-btn");
 const titleRename = document.getElementById("title-rename");
 const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
-const saveBtn = document.querySelector(".save-btn");
+const editSaveBtn = document.querySelector(".edit-save-btn");
 const addCancelBtn = document.querySelector(".add-cancel-btn");
 const editCancelBtn = document.querySelector(".edit-cancel-btn");
 
@@ -78,7 +78,7 @@ function renderEditButton(uuid, contentTitle, contentLiElement) {
 }
 
 // 既存のデータを書き換えて保存する
-saveBtn.addEventListener("click", () => {
+editSaveBtn.addEventListener("click", () => {
   const renameInput = titleRename.value.trim();
   anirackContentRecords = anirackContentRecords.map((contentRecord) => {
     if (contentRecord.id === contentRenameDialogId && renameInput !== "") {

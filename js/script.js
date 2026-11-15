@@ -89,16 +89,25 @@ function renderEditButton(uuid, contentTitle, contentReview, contentLiElement) {
 // 既存のデータを書き換えて保存する
 editSaveBtn.addEventListener("click", () => {
   const renameInput = titleRename.value.trim();
-  anirackContentRecords = anirackContentRecords.map((contentRecord) => {
-    if (contentRecord.id === contentRenameDialogId && renameInput !== "") {
-      contentRecord.title = renameInput;
-    }
-    return contentRecord;
-  });
-  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
-  titleRename.value = "";
-  editDialog.close();
-  renderList();
+  const rewriteReviewText = editReviewText.value.trim();
+
+  if (renameInput === "") {
+    titleRename.setCustomValidity("タイトルを入力してください");
+    titleRename.reportValidity();
+  } else {
+    anirackContentRecords = anirackContentRecords.map((contentRecord) => {
+      if (contentRecord.id === contentRenameDialogId) {
+        contentRecord.title = renameInput;
+        contentRecord.review = rewriteReviewText;
+      }
+      return contentRecord;
+    });
+    localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+    titleRename.value = "";
+    editReviewText.value = "";
+    editDialog.close();
+    renderList();
+  }
 });
 
 // D（Delete / 削除）

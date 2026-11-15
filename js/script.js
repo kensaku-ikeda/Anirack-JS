@@ -2,13 +2,13 @@
 const form = document.querySelector("form");
 const list = document.querySelector(".title-list");
 const input = document.getElementById("title");
-const openAddDialogBtn = document.querySelector(".open-add-dialog-btn");
 const titleRename = document.getElementById("title-rename");
 const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
 const editSaveBtn = document.querySelector(".edit-save-btn");
 const addCancelBtn = document.querySelector(".add-cancel-btn");
 const editCancelBtn = document.querySelector(".edit-cancel-btn");
+const openAddDialogBtn = document.querySelector(".open-add-dialog-btn");
 
 // グローバル変数
 let contentRenameDialogId;

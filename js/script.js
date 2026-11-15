@@ -2,13 +2,13 @@
 const form = document.querySelector("form");
 const list = document.querySelector(".title-list");
 const input = document.getElementById("title");
-const record = document.querySelector(".record");
 const titleRename = document.getElementById("title-rename");
-const edit = document.querySelector(".edit");
-const add = document.querySelector(".add");
-const saveBtn = document.querySelector(".save-btn");
+const editDialog = document.querySelector(".edit-dialog");
+const addDialog = document.querySelector(".add-dialog");
+const editSaveBtn = document.querySelector(".edit-save-btn");
 const addCancelBtn = document.querySelector(".add-cancel-btn");
 const editCancelBtn = document.querySelector(".edit-cancel-btn");
+const openAddDialogBtn = document.querySelector(".open-add-dialog-btn");
 
 // グローバル変数
 let contentRenameDialogId;
@@ -38,7 +38,7 @@ form.addEventListener("submit", (event) => {
     };
     anirackContentRecords.push(contentRecord);
     form.reset();
-    add.close();
+    addDialog.close();
     renderList();
     localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
   }
@@ -73,12 +73,12 @@ function renderEditButton(uuid, contentTitle, contentLiElement) {
   button.addEventListener("click", () => {
     titleRename.value = contentTitle;
     contentRenameDialogId = uuid;
-    edit.showModal();
+    editDialog.showModal();
   });
 }
 
 // 既存のデータを書き換えて保存する
-saveBtn.addEventListener("click", () => {
+editSaveBtn.addEventListener("click", () => {
   const renameInput = titleRename.value.trim();
   anirackContentRecords = anirackContentRecords.map((contentRecord) => {
     if (contentRecord.id === contentRenameDialogId && renameInput !== "") {
@@ -88,7 +88,7 @@ saveBtn.addEventListener("click", () => {
   });
   localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
   titleRename.value = "";
-  edit.close();
+  editDialog.close();
   renderList();
 });
 
@@ -108,21 +108,21 @@ function renderDeleteButton(uuid, contentLiElement) {
 }
 
 // モーダルの開閉
-record.addEventListener("click", () => {
-  add.showModal();
+openAddDialogBtn.addEventListener("click", () => {
+  addDialog.showModal();
 });
 
-add.addEventListener("click", (event) => {
+addDialog.addEventListener("click", (event) => {
   //暗い部分のみをクリックしたら閉じるようにする
-  if (event.target === add) {
-    add.close();
+  if (event.target === addDialog) {
+    addDialog.close();
   }
 });
 
 addCancelBtn.addEventListener("click", () => {
-  add.close();
+  addDialog.close();
 });
 
 editCancelBtn.addEventListener("click", () => {
-  edit.close();
+  editDialog.close();
 });

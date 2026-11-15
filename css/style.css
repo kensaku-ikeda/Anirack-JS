@@ -156,6 +156,13 @@ main {
   box-shadow: var(--shadow-sheet);
 }
 
+.dialog-container,
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
 .dialog-header {
   display: flex;
   justify-content: space-between;

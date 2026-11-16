@@ -7,6 +7,7 @@ const editReviewText = document.getElementById("edit-review-text");
 const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
 const editSaveBtn = document.querySelector(".edit-save-btn");
+const contentDeleteBtn = document.querySelector(".content-delete-btn");
 const addCancelBtn = document.querySelector(".add-cancel-btn");
 const editCancelBtn = document.querySelector(".edit-cancel-btn");
 const openAddDialogBtn = document.querySelector(".open-add-dialog-btn");
@@ -115,18 +116,14 @@ editSaveBtn.addEventListener("click", () => {
 
 // D（Delete / 削除）
 // 既存のデータを削除する
-function renderDeleteButton(uuid, contentLiElement) {
-  const button = document.createElement("button");
-  contentLiElement.appendChild(button);
-  button.textContent = "削除";
-  button.addEventListener("click", () => {
-    anirackContentRecords = anirackContentRecords.filter((contentRecord) => {
-      return uuid !== contentRecord.id;
-    });
-    localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
-    renderList();
+contentDeleteBtn.addEventListener("click", () => {
+  anirackContentRecords = anirackContentRecords.filter((contentRecord) => {
+    return contentRenameDialogId !== contentRecord.id;
   });
-}
+  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+  renderList();
+  editDialog.close();
+});
 
 // モーダルの開閉
 openAddDialogBtn.addEventListener("click", () => {

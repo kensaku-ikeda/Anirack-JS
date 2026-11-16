@@ -67,6 +67,12 @@ function renderList() {
     coverButton.classList.add("cover");
     coverButton.setAttribute("type", "button");
     coverTitle.classList.add("cover-title");
+    coverButton.addEventListener("click", () => {
+      contentRenameDialogId = contentRecord.id;
+      titleRename.value = contentRecord.title;
+      editReviewText.value = contentRecord.review;
+      editDialog.showModal();
+    });
     if (index % 3 === 0) {
       const shelf = document.createElement("div");
       shelf.classList.add("shelf");
@@ -83,19 +89,6 @@ function renderList() {
 }
 
 // U（Update / 更新）
-// タイトルごとに編集ボタンを作る関数、押すと編集ダイアログが開く
-function renderEditButton(uuid, contentTitle, contentReview, contentLiElement) {
-  const button = document.createElement("button");
-  contentLiElement.appendChild(button);
-  button.textContent = "編集";
-  button.addEventListener("click", () => {
-    titleRename.value = contentTitle;
-    editReviewText.value = contentReview;
-    contentRenameDialogId = uuid;
-    editDialog.showModal();
-  });
-}
-
 // 既存のデータを書き換えて保存する
 editSaveBtn.addEventListener("click", () => {
   const renameInput = titleRename.value.trim();

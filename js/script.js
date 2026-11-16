@@ -1,6 +1,6 @@
 // 要素の取得
 const form = document.querySelector("form");
-const list = document.querySelector(".title-list");
+const shelfList = document.querySelector(".shelf-list");
 const input = document.getElementById("title");
 const titleRename = document.getElementById("title-rename");
 const editReviewText = document.getElementById("edit-review-text");
@@ -57,18 +57,28 @@ if (savedRecords) {
 
 // 保存されたデータを画面に表示する
 function renderList() {
-  list.textContent = "";
-  anirackContentRecords.forEach((contentRecord) => {
-    const li = document.createElement("li");
-    li.textContent = contentRecord.title;
-    list.appendChild(li);
-    renderEditButton(
-      contentRecord.id,
-      contentRecord.title,
-      contentRecord.review,
-      li,
-    );
-    renderDeleteButton(contentRecord.id, li);
+  shelfList.textContent = "";
+  let shelfRow;
+  anirackContentRecords.forEach((contentRecord, index) => {
+    const coverButton = document.createElement("button");
+    const coverTitle = document.createElement("span");
+    coverTitle.textContent = contentRecord.title;
+    coverButton.appendChild(coverTitle);
+    coverButton.classList.add("cover");
+    coverButton.setAttribute("type", "button");
+    coverTitle.classList.add("cover-title");
+    if (index % 3 === 0) {
+      const shelf = document.createElement("div");
+      shelf.classList.add("shelf");
+      const shelfBoard = document.createElement("div");
+      shelfBoard.classList.add("shelf-board");
+      shelfRow = document.createElement("div");
+      shelfRow.classList.add("shelf-row");
+      shelfList.appendChild(shelf);
+      shelf.appendChild(shelfRow);
+      shelf.appendChild(shelfBoard);
+    }
+    shelfRow.appendChild(coverButton);
   });
 }
 

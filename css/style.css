@@ -124,6 +124,56 @@ main {
   overflow: auto;
 }
 
+.shelf-list {
+  display: flex;
+  flex-direction: column;
+  padding: 36px var(--space-5) 120px;
+  gap: var(--space-7);
+}
+
+.shelf-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 0 var(--space-2);
+  gap: var(--space-3);
+  align-items: end;
+}
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: var(--color-blue);
+  border: var(--border-m);
+  border-bottom: none;
+  height: 150px;
+  padding: 6px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.cover-title {
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--color-ink);
+  background-color: var(--color-paper);
+  border: var(--border-s);
+  padding: 0px 4px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.shelf-board {
+  height: 12px;
+  background-color: var(--color-yellow);
+  border: var(--border-m);
+  box-shadow: 0 5px 0 var(--color-ink);
+}
+
 /* 画面下側 */
 .bottom-bar {
   height: 96px;

@@ -13,11 +13,13 @@
   /* フォント */
   --font-display: "Dela Gothic One", sans-serif;
   --font-body: "M PLUS Rounded 1c", sans-serif;
+  --font-body-bold: "M PLUS Rounded 1c-bold", sans-serif;
 
   /* 画面の余白 */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
+  --space-4: 16px;
   --space-5: 20px;
   --space-6: 24px;
   --space-7: 28px;
@@ -91,11 +93,6 @@ button {
   align-items: center;
 }
 
-form input {
-  border: none;
-  border-bottom: var(--border-m);
-}
-
 input:focus {
   outline: none;
 }
@@ -142,4 +139,74 @@ main {
   box-shadow: 0 0 0 2px var(--color-yellow);
   font: 17px var(--font-display);
   transform: rotate(-2deg);
+}
+
+/* ダイアログ */
+.dialog {
+  margin: auto 0 0 0;
+  width: 100%;
+  max-width: none;
+  border: none;
+  border-top: var(--border-m);
+  box-shadow: var(--shadow-sheet);
+}
+
+.dialog-container,
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: var(--border-m);
+}
+
+.title-input {
+  border: none;
+  width: 100%;
+  border-bottom: var(--border-m);
+}
+
+.label-text {
+  display: block;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  font-family: var(--font-body-bold);
+}
+
+.btn-tap-size {
+  width: var(--tap);
+  height: var(--tap);
+}
+
+.review-text-area {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font: 500 14px/1.85 var(--font-body);
+  border: var(--border-m);
+  border-radius: var(--radius-bubble);
+}
+
+.btn-primary {
+  width: 100%;
+  height: 54px;
+  background-color: var(--color-ink);
+  color: var(--color-yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  transition: transform 80ms;
+}
+
+.btn-primary:active {
+  transform: translate(2px, 2px);
+  outline: 3px solid var(--color-yellow);
+  outline-offset: -6px;
 }

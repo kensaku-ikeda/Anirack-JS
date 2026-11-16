@@ -18,71 +18,7 @@
     </div>
 
     <main>
-      <dialog class="dialog edit-dialog">
-        <div class="dialog-container">
-          <div class="dialog-header">
-            <button class="edit-cancel-btn btn-tap-size">✕</button>
-            <h2>編集する</h2>
-            <div class="btn-tap-size"></div>
-          </div>
-          <label for="title-rename">
-            <span class="label-text">TITLE / タイトル</span>
-            <input
-              type="text"
-              id="title-rename"
-              class="title-input"
-              name="content-title-rename"
-              placeholder="作品の名前を入力してください"
-              required
-            />
-          </label>
-          <label for="edit-review-text">
-            <span class="label-text">REVIEW / 感想</span>
-            <textarea
-              id="edit-review-text"
-              class="review-text-area"
-              rows="5"
-              placeholder="感想はまだありません"
-            ></textarea>
-          </label>
-          <button class="btn-primary edit-save-btn">保存</button>
-        </div>
-      </dialog>
-
       <div class="container">
-        <dialog class="dialog add-dialog">
-          <div class="dialog-container">
-            <div class="dialog-header">
-              <button class="add-cancel-btn btn-tap-size">✕</button>
-              <h2>新しい作品</h2>
-              <div class="btn-tap-size"></div>
-            </div>
-            <form>
-              <label for="title">
-                <span class="label-text">TITLE / タイトル</span>
-                <input
-                  type="text"
-                  id="title"
-                  class="title-input"
-                  name="content-title"
-                  placeholder="作品の名前を入力してください"
-                  required
-                />
-              </label>
-              <label for="add-review-text">
-                <span class="label-text">REVIEW / 感想</span>
-                <textarea
-                  id="add-review-text"
-                  class="review-text-area"
-                  name="content-review"
-                  rows="5"
-                  placeholder="感想を入力してください"
-                ></textarea>
-              </label>
-              <button class="btn-primary" type="submit">追加</button>
-            </form>
-          </div>
-        </dialog>
         <ul class="title-list"></ul>
       </div>
     </main>
@@ -92,6 +28,71 @@
         <button class="open-add-dialog-btn" type="button">＋記録する</button>
       </div>
     </div>
+
+    <dialog class="dialog edit-dialog">
+      <div class="dialog-container">
+        <div class="dialog-header">
+          <button class="edit-cancel-btn btn-tap-size">✕</button>
+          <h2>編集する</h2>
+          <div class="btn-tap-size"></div>
+        </div>
+        <label for="title-rename">
+          <span class="label-text">TITLE / タイトル</span>
+          <input
+            type="text"
+            id="title-rename"
+            class="title-input"
+            name="content-title-rename"
+            placeholder="作品の名前を入力してください"
+            required
+          />
+        </label>
+        <label for="edit-review-text">
+          <span class="label-text">REVIEW / 感想</span>
+          <textarea
+            id="edit-review-text"
+            class="review-text-area"
+            rows="5"
+            placeholder="感想はまだありません"
+          ></textarea>
+        </label>
+        <button class="btn-primary edit-save-btn">保存</button>
+      </div>
+    </dialog>
+
+    <dialog class="dialog add-dialog">
+      <div class="dialog-container">
+        <div class="dialog-header">
+          <button class="add-cancel-btn btn-tap-size">✕</button>
+          <h2>新しい作品</h2>
+          <div class="btn-tap-size"></div>
+        </div>
+        <form>
+          <label for="title">
+            <span class="label-text">TITLE / タイトル</span>
+            <input
+              type="text"
+              id="title"
+              class="title-input"
+              name="content-title"
+              placeholder="作品の名前を入力してください"
+              required
+            />
+          </label>
+          <label for="add-review-text">
+            <span class="label-text">REVIEW / 感想</span>
+            <textarea
+              id="add-review-text"
+              class="review-text-area"
+              name="content-review"
+              rows="5"
+              placeholder="感想を入力してください"
+            ></textarea>
+          </label>
+          <button class="btn-primary" type="submit">追加</button>
+        </form>
+      </div>
+    </dialog>
     <script src="js/script.js" defer></script>
   </body>
 </html>

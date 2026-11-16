@@ -93,11 +93,6 @@ button {
   align-items: center;
 }
 
-form input {
-  border: none;
-  border-bottom: var(--border-m);
-}
-
 input:focus {
   outline: none;
 }
@@ -166,6 +161,12 @@ form {
 .dialog-header {
   display: flex;
   justify-content: space-between;
+  border-bottom: var(--border-m);
+}
+
+.title-input {
+  border: none;
+  width: 100%;
   border-bottom: var(--border-m);
 }
 

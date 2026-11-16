@@ -259,10 +259,6 @@ form {
   outline-offset: -6px;
 }
 
-.hidden {
-  display: none;
-}
-
 .link-danger {
   display: flex;
   align-self: center;
@@ -274,4 +270,52 @@ form {
   font-family: var(--font-body-bold);
   color: var(--color-pink);
   text-decoration: underline;
+}
+
+/* 削除の確認 */
+.delete-confirm {
+  display: flex;
+  flex-direction: column;
+  border: var(--border-m);
+  padding: 16px;
+  gap: var(--space-3);
+}
+
+.delete-confirm-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.delete-confirm-text {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.delete-confirm-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.delete-confirm-btn {
+  display: flex;
+  height: 48px;
+  border: var(--border-m);
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-family: var(--font-body-bold);
+}
+
+.delete-confirm-submit-btn {
+  background-color: var(--color-pink);
+  box-shadow: var(--shadow-s);
+}
+
+.hidden {
+  display: none !important;
 }

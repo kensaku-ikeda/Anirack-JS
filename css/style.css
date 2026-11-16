@@ -319,3 +319,43 @@ form {
 .hidden {
   display: none !important;
 }
+
+/* ----------------------- タブレット:幅 768px以上 -----------------------*/
+
+@media (min-width: 768px) {
+  .app-header,
+  .shelf-list {
+    padding-left: var(--space-7);
+    padding-right: var(--space-7);
+  }
+
+  .shelf-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-7);
+    align-items: start;
+  }
+
+  .dialog {
+    max-width: 480px;
+    margin: auto auto 0;
+  }
+}
+
+/* ----------------------- デスクトップ:幅 1024px以上 -----------------------*/
+
+@media (min-width: 1024px) {
+  .app-header {
+    max-width: 1176px;
+  }
+  .shelf-list {
+    padding-left: max(var(--space-7), calc((100% - 1120px) / 2));
+    padding-right: max(var(--space-7), calc((100% - 1120px) / 2));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .dialog {
+    margin: auto;
+    border: var(--border-m);
+  }
+}

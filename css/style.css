@@ -80,8 +80,7 @@ textarea {
 }
 
 h1,
-h2,
-button {
+h2 {
   font-family: var(--font-display);
   font-weight: 400;
 }
@@ -122,6 +121,56 @@ input:focus {
 /* メイン */
 main {
   overflow: auto;
+}
+
+.shelf-list {
+  display: flex;
+  flex-direction: column;
+  padding: 36px var(--space-5) 120px;
+  gap: var(--space-7);
+}
+
+.shelf-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 0 var(--space-2);
+  gap: var(--space-3);
+  align-items: end;
+}
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: var(--color-blue);
+  border: var(--border-m);
+  border-bottom: none;
+  height: 150px;
+  padding: 6px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.cover-title {
+  font-size: 10px;
+  font-family: var(--font-body-bold);
+  line-height: 1.25;
+  color: var(--color-ink);
+  background-color: var(--color-paper);
+  border: var(--border-s);
+  padding: 0px 4px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.shelf-board {
+  height: 12px;
+  background-color: var(--color-yellow);
+  border: var(--border-m);
+  box-shadow: 0 5px 0 var(--color-ink);
 }
 
 /* 画面下側 */
@@ -172,7 +221,6 @@ form {
 
 .label-text {
   display: block;
-  font-weight: 800;
   font-size: 11px;
   letter-spacing: 0.08em;
   font-family: var(--font-body-bold);
@@ -209,4 +257,65 @@ form {
   transform: translate(2px, 2px);
   outline: 3px solid var(--color-yellow);
   outline-offset: -6px;
+}
+
+.link-danger {
+  display: flex;
+  align-self: center;
+  align-items: center;
+  height: var(--tap);
+  padding: 0 var(--space-4);
+  margin-top: -12px;
+  font-size: 13px;
+  font-family: var(--font-body-bold);
+  color: var(--color-pink);
+  text-decoration: underline;
+}
+
+/* 削除の確認 */
+.delete-confirm {
+  display: flex;
+  flex-direction: column;
+  border: var(--border-m);
+  padding: 16px;
+  gap: var(--space-3);
+}
+
+.delete-confirm-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.delete-confirm-text {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.delete-confirm-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.delete-confirm-btn {
+  display: flex;
+  height: 48px;
+  border: var(--border-m);
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-family: var(--font-body-bold);
+}
+
+.delete-confirm-submit-btn {
+  background-color: var(--color-pink);
+  box-shadow: var(--shadow-s);
+}
+
+.hidden {
+  display: none !important;
 }

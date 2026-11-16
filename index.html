@@ -17,11 +17,7 @@
       </div>
     </div>
 
-    <main>
-      <div class="container">
-        <ul class="title-list"></ul>
-      </div>
-    </main>
+    <main class="shelf-list"></main>
 
     <div class="bottom-bar">
       <div class="container">
@@ -33,7 +29,7 @@
       <div class="dialog-container">
         <div class="dialog-header">
           <button class="edit-cancel-btn btn-tap-size">✕</button>
-          <h2>編集する</h2>
+          <h2>編集</h2>
           <div class="btn-tap-size"></div>
         </div>
         <label for="title-rename">
@@ -56,7 +52,33 @@
             placeholder="感想はまだありません"
           ></textarea>
         </label>
-        <button class="btn-primary edit-save-btn">保存</button>
+        <button class="btn-primary edit-save-btn">保存する</button>
+        <button class="link-danger content-delete-btn">
+          この作品を本棚から出す
+        </button>
+        <div class="delete-confirm hidden">
+          <p class="delete-confirm-title">
+            「<span class="delete-confirm-content-title"></span
+            >」を本棚から出しますか？
+          </p>
+          <p class="delete-confirm-text">
+            感想も一緒に消えます。取り消せません。
+          </p>
+          <div class="delete-confirm-actions">
+            <button
+              class="delete-confirm-btn delete-confirm-cancel-btn"
+              type="button"
+            >
+              やめる
+            </button>
+            <button
+              class="delete-confirm-btn delete-confirm-submit-btn"
+              type="button"
+            >
+              出す
+            </button>
+          </div>
+        </div>
       </div>
     </dialog>
 

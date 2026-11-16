@@ -1,12 +1,24 @@
 // 要素の取得
 const form = document.querySelector("form");
-const list = document.querySelector(".title-list");
+
+const shelfList = document.querySelector(".shelf-list");
 const input = document.getElementById("title");
 const titleRename = document.getElementById("title-rename");
 const editReviewText = document.getElementById("edit-review-text");
 const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
 const editSaveBtn = document.querySelector(".edit-save-btn");
+const contentDeleteBtn = document.querySelector(".content-delete-btn");
+const deleteConfirm = document.querySelector(".delete-confirm");
+const deleteConfirmSubmitBtn = document.querySelector(
+  ".delete-confirm-submit-btn",
+);
+const deleteConfirmCancelBtn = document.querySelector(
+  ".delete-confirm-cancel-btn",
+);
+const deleteConfirmContentTitle = document.querySelector(
+  ".delete-confirm-content-title",
+);
 const addCancelBtn = document.querySelector(".add-cancel-btn");
 const editCancelBtn = document.querySelector(".edit-cancel-btn");
 const openAddDialogBtn = document.querySelector(".open-add-dialog-btn");
@@ -57,35 +69,41 @@ if (savedRecords) {
 
 // 保存されたデータを画面に表示する
 function renderList() {
-  list.textContent = "";
-  anirackContentRecords.forEach((contentRecord) => {
-    const li = document.createElement("li");
-    li.textContent = contentRecord.title;
-    list.appendChild(li);
-    renderEditButton(
-      contentRecord.id,
-      contentRecord.title,
-      contentRecord.review,
-      li,
-    );
-    renderDeleteButton(contentRecord.id, li);
+  shelfList.textContent = "";
+  let shelfRow;
+  anirackContentRecords.forEach((contentRecord, index) => {
+    const coverButton = document.createElement("button");
+    const coverTitle = document.createElement("span");
+    coverTitle.textContent = contentRecord.title;
+    coverButton.appendChild(coverTitle);
+    coverButton.classList.add("cover");
+    coverButton.setAttribute("type", "button");
+    coverTitle.classList.add("cover-title");
+    coverButton.addEventListener("click", () => {
+      contentRenameDialogId = contentRecord.id;
+      titleRename.value = contentRecord.title;
+      deleteConfirmContentTitle.textContent = contentRecord.title;
+      editReviewText.value = contentRecord.review;
+      editDialog.showModal();
+      contentDeleteBtn.classList.remove("hidden");
+      deleteConfirm.classList.add("hidden");
+    });
+    if (index % 3 === 0) {
+      const shelf = document.createElement("div");
+      shelf.classList.add("shelf");
+      const shelfBoard = document.createElement("div");
+      shelfBoard.classList.add("shelf-board");
+      shelfRow = document.createElement("div");
+      shelfRow.classList.add("shelf-row");
+      shelfList.appendChild(shelf);
+      shelf.appendChild(shelfRow);
+      shelf.appendChild(shelfBoard);
+    }
+    shelfRow.appendChild(coverButton);
   });
 }
 
 // U（Update / 更新）
-// タイトルごとに編集ボタンを作る関数、押すと編集ダイアログが開く
-function renderEditButton(uuid, contentTitle, contentReview, contentLiElement) {
-  const button = document.createElement("button");
-  contentLiElement.appendChild(button);
-  button.textContent = "編集";
-  button.addEventListener("click", () => {
-    titleRename.value = contentTitle;
-    editReviewText.value = contentReview;
-    contentRenameDialogId = uuid;
-    editDialog.showModal();
-  });
-}
-
 // 既存のデータを書き換えて保存する
 editSaveBtn.addEventListener("click", () => {
   const renameInput = titleRename.value.trim();
@@ -112,18 +130,24 @@ editSaveBtn.addEventListener("click", () => {
 
 // D（Delete / 削除）
 // 既存のデータを削除する
-function renderDeleteButton(uuid, contentLiElement) {
-  const button = document.createElement("button");
-  contentLiElement.appendChild(button);
-  button.textContent = "削除";
-  button.addEventListener("click", () => {
-    anirackContentRecords = anirackContentRecords.filter((contentRecord) => {
-      return uuid !== contentRecord.id;
-    });
-    localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
-    renderList();
+deleteConfirmSubmitBtn.addEventListener("click", () => {
+  anirackContentRecords = anirackContentRecords.filter((contentRecord) => {
+    return contentRenameDialogId !== contentRecord.id;
   });
-}
+  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+  renderList();
+  editDialog.close();
+});
+
+contentDeleteBtn.addEventListener("click", () => {
+  deleteConfirm.classList.toggle("hidden");
+  contentDeleteBtn.classList.toggle("hidden");
+});
+
+deleteConfirmCancelBtn.addEventListener("click", () => {
+  deleteConfirm.classList.toggle("hidden");
+  contentDeleteBtn.classList.toggle("hidden");
+});
 
 // モーダルの開閉
 openAddDialogBtn.addEventListener("click", () => {

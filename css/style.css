@@ -260,3 +260,7 @@ form {
   outline: 3px solid var(--color-yellow);
   outline-offset: -6px;
 }
+
+.hidden {
+  display: none;
+}

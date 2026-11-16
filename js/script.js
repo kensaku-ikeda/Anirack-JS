@@ -1,5 +1,6 @@
 // 要素の取得
 const form = document.querySelector("form");
+
 const shelfList = document.querySelector(".shelf-list");
 const input = document.getElementById("title");
 const titleRename = document.getElementById("title-rename");
@@ -8,6 +9,16 @@ const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
 const editSaveBtn = document.querySelector(".edit-save-btn");
 const contentDeleteBtn = document.querySelector(".content-delete-btn");
+const deleteConfirm = document.querySelector(".delete-confirm");
+const deleteConfirmSubmitBtn = document.querySelector(
+  ".delete-confirm-submit-btn",
+);
+const deleteConfirmCancelBtn = document.querySelector(
+  ".delete-confirm-cancel-btn",
+);
+const deleteConfirmContentTitle = document.querySelector(
+  ".delete-confirm-content-title",
+);
 const addCancelBtn = document.querySelector(".add-cancel-btn");
 const editCancelBtn = document.querySelector(".edit-cancel-btn");
 const openAddDialogBtn = document.querySelector(".open-add-dialog-btn");
@@ -71,8 +82,11 @@ function renderList() {
     coverButton.addEventListener("click", () => {
       contentRenameDialogId = contentRecord.id;
       titleRename.value = contentRecord.title;
+      deleteConfirmContentTitle.textContent = contentRecord.title;
       editReviewText.value = contentRecord.review;
       editDialog.showModal();
+      contentDeleteBtn.classList.remove("hidden");
+      deleteConfirm.classList.add("hidden");
     });
     if (index % 3 === 0) {
       const shelf = document.createElement("div");
@@ -116,13 +130,23 @@ editSaveBtn.addEventListener("click", () => {
 
 // D（Delete / 削除）
 // 既存のデータを削除する
-contentDeleteBtn.addEventListener("click", () => {
+deleteConfirmSubmitBtn.addEventListener("click", () => {
   anirackContentRecords = anirackContentRecords.filter((contentRecord) => {
     return contentRenameDialogId !== contentRecord.id;
   });
   localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
   renderList();
   editDialog.close();
+});
+
+contentDeleteBtn.addEventListener("click", () => {
+  deleteConfirm.classList.toggle("hidden");
+  contentDeleteBtn.classList.toggle("hidden");
+});
+
+deleteConfirmCancelBtn.addEventListener("click", () => {
+  deleteConfirm.classList.toggle("hidden");
+  contentDeleteBtn.classList.toggle("hidden");
 });
 
 // モーダルの開閉

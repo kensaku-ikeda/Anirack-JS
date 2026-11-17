@@ -74,9 +74,9 @@ searchBtn.addEventListener("click", async () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        query: `query ($search: String) { # Define which variables will be used in the query (id)
+        query: `query ($search: String) {
         Page {
-          media (type: ANIME, search: $search) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
+          media (type: ANIME, search: $search) {
             id
             title {
               native
@@ -90,7 +90,6 @@ searchBtn.addEventListener("click", async () => {
       }),
     });
     const json = await response.json();
-    console.log(json);
     const media = json.data.Page.media;
     searchResults.classList.remove("hidden");
     media.forEach((obj) => {

@@ -255,6 +255,36 @@ form {
   gap: 0;
 }
 
+.search-results {
+  border: var(--border-m);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.search-results li + li {
+  border-top: var(--border-s);
+}
+
+.search-result {
+  width: 100%;
+  text-align: left;
+  display: grid;
+  /* grid-template-columns: 40px 1fr; */
+  /* grid-template-rows: auto auto; */
+  column-gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-2) 10px;
+}
+
+.search-result-title {
+  font-size: 14px;
+  font-family: var(--font-body-bold);
+}
+
+.search-result:active {
+  background-color: var(--color-yellow);
+}
+
 .btn-tap-size {
   width: var(--tap);
   height: var(--tap);

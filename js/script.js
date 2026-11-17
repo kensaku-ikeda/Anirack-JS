@@ -90,9 +90,13 @@ searchBtn.addEventListener("click", async () => {
   media.forEach((obj) => {
     const list = document.createElement("li");
     const button = document.createElement("button");
+    const span = document.createElement("span");
     list.appendChild(button);
     button.setAttribute("type", "button");
-    button.textContent = obj.title.native;
+    button.classList.add("search-result");
+    button.appendChild(span);
+    span.textContent = obj.title.native;
+    span.classList.add("search-result-title");
     button.addEventListener("click", () => {
       input.value = button.textContent;
     });

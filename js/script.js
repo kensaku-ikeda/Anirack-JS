@@ -7,6 +7,7 @@ const editReviewText = document.getElementById("edit-review-text");
 const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
 const searchBtn = document.querySelector(".search-btn");
+const searchResults = document.querySelector(".search-results");
 const editSaveBtn = document.querySelector(".edit-save-btn");
 const contentDeleteBtn = document.querySelector(".content-delete-btn");
 const deleteConfirm = document.querySelector(".delete-confirm");
@@ -61,6 +62,7 @@ form.addEventListener("submit", (event) => {
 
 // 検索ボタン
 searchBtn.addEventListener("click", async () => {
+  searchResults.textContent = "";
   const response = await fetch("https://graphql.anilist.co", {
     method: "POST",
     headers: {
@@ -78,7 +80,7 @@ searchBtn.addEventListener("click", async () => {
         }
       }`,
       variables: {
-        search: "コナン",
+        search: input.value,
       },
     }),
   });
@@ -86,7 +88,15 @@ searchBtn.addEventListener("click", async () => {
   console.log(json);
   const media = json.data.Page.media;
   media.forEach((obj) => {
-    console.log(obj.title.native);
+    const list = document.createElement("li");
+    const button = document.createElement("button");
+    list.appendChild(button);
+    button.setAttribute("type", "button");
+    button.textContent = obj.title.native;
+    button.addEventListener("click", () => {
+      input.value = button.textContent;
+    });
+    searchResults.appendChild(list);
   });
 });
 

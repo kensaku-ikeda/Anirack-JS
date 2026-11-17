@@ -219,11 +219,40 @@ form {
   border-bottom: var(--border-m);
 }
 
+.title-search-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.title-search-row .title-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-btn {
+  height: var(--tap);
+  padding: 0 var(--space-4);
+  background-color: var(--color-ink);
+  color: var(--color-yellow);
+  font-family: var(--font-display);
+  font-size: 15px;
+}
+
+.search-btn:disabled {
+  background-color: var(--color-dot);
+  color: var(--color-muted);
+}
+
 .label-text {
   display: block;
   font-size: 11px;
   letter-spacing: 0.08em;
   font-family: var(--font-body-bold);
+}
+
+.label-text .title-search-row {
+  gap: 0;
 }
 
 .btn-tap-size {

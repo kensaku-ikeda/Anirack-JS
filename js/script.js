@@ -82,7 +82,12 @@ searchBtn.addEventListener("click", async () => {
       },
     }),
   });
-  console.log(response);
+  const json = await response.json();
+  console.log(json);
+  const media = json.data.Page.media;
+  media.forEach((obj) => {
+    console.log(obj.title.native);
+  });
 });
 
 // R（Read / 読み取り）

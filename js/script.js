@@ -1,12 +1,12 @@
 // 要素の取得
 const form = document.querySelector("form");
-
 const shelfList = document.querySelector(".shelf-list");
 const input = document.getElementById("title");
 const titleRename = document.getElementById("title-rename");
 const editReviewText = document.getElementById("edit-review-text");
 const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
+const searchBtn = document.querySelector(".search-btn");
 const editSaveBtn = document.querySelector(".edit-save-btn");
 const contentDeleteBtn = document.querySelector(".content-delete-btn");
 const deleteConfirm = document.querySelector(".delete-confirm");
@@ -57,6 +57,32 @@ form.addEventListener("submit", (event) => {
     renderList();
     localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
   }
+});
+
+// 検索ボタン
+searchBtn.addEventListener("click", async () => {
+  const response = await fetch("https://graphql.anilist.co", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: `query ($search: String) { # Define which variables will be used in the query (id)
+        Page {
+          media (type: ANIME, search: $search) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
+            id
+            title {
+              native
+            }
+          }
+        }
+      }`,
+      variables: {
+        search: "コナン",
+      },
+    }),
+  });
+  console.log(response);
 });
 
 // R（Read / 読み取り）

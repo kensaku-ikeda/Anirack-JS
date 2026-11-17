@@ -63,13 +63,18 @@ form.addEventListener("submit", (event) => {
 // 検索ボタン
 searchBtn.addEventListener("click", async () => {
   searchResults.textContent = "";
-  const response = await fetch("https://graphql.anilist.co", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: `query ($search: String) { # Define which variables will be used in the query (id)
+  searchResults.classList.add("hidden");
+  if (input.value === "") {
+    input.setCustomValidity("タイトルを入力してください");
+    input.reportValidity();
+  } else {
+    const response = await fetch("https://graphql.anilist.co", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `query ($search: String) { # Define which variables will be used in the query (id)
         Page {
           media (type: ANIME, search: $search) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
             id
@@ -79,29 +84,31 @@ searchBtn.addEventListener("click", async () => {
           }
         }
       }`,
-      variables: {
-        search: input.value,
-      },
-    }),
-  });
-  const json = await response.json();
-  console.log(json);
-  const media = json.data.Page.media;
-  media.forEach((obj) => {
-    const list = document.createElement("li");
-    const button = document.createElement("button");
-    const span = document.createElement("span");
-    list.appendChild(button);
-    button.setAttribute("type", "button");
-    button.classList.add("search-result");
-    button.appendChild(span);
-    span.textContent = obj.title.native;
-    span.classList.add("search-result-title");
-    button.addEventListener("click", () => {
-      input.value = button.textContent;
+        variables: {
+          search: input.value,
+        },
+      }),
     });
-    searchResults.appendChild(list);
-  });
+    const json = await response.json();
+    console.log(json);
+    const media = json.data.Page.media;
+    searchResults.classList.remove("hidden");
+    media.forEach((obj) => {
+      const list = document.createElement("li");
+      const button = document.createElement("button");
+      const span = document.createElement("span");
+      list.appendChild(button);
+      button.setAttribute("type", "button");
+      button.classList.add("search-result");
+      button.appendChild(span);
+      span.textContent = obj.title.native;
+      span.classList.add("search-result-title");
+      button.addEventListener("click", () => {
+        input.value = button.textContent;
+      });
+      searchResults.appendChild(list);
+    });
+  }
 });
 
 // R（Read / 読み取り）

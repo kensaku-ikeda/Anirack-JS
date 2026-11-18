@@ -68,6 +68,8 @@ searchBtn.addEventListener("click", async () => {
     input.setCustomValidity("タイトルを入力してください");
     input.reportValidity();
   } else {
+    searchBtn.disabled = true;
+    searchBtn.textContent = "検索中...";
     const response = await fetch("https://graphql.anilist.co", {
       method: "POST",
       headers: {
@@ -107,6 +109,8 @@ searchBtn.addEventListener("click", async () => {
       });
       searchResults.appendChild(list);
     });
+    searchBtn.disabled = false;
+    searchBtn.textContent = "検索";
   }
 });
 

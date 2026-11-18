@@ -85,6 +85,8 @@ searchBtn.addEventListener("click", async () => {
             id
             title {
               native
+              english
+              romaji
             }
           }
         }
@@ -110,7 +112,13 @@ searchBtn.addEventListener("click", async () => {
           button.setAttribute("type", "button");
           button.classList.add("search-result");
           button.appendChild(span);
-          span.textContent = obj.title.native;
+          if (obj.title.native !== null) {
+            span.textContent = obj.title.native;
+          } else if (obj.title.english !== null) {
+            span.textContent = obj.title.english;
+          } else {
+            span.textContent = obj.title.romaji;
+          }
           span.classList.add("search-result-title");
           button.addEventListener("click", () => {
             input.value = button.textContent;

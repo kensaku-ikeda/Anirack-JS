@@ -219,11 +219,68 @@ form {
   border-bottom: var(--border-m);
 }
 
+.title-search-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.title-search-row .title-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-btn {
+  height: var(--tap);
+  padding: 0 var(--space-4);
+  background-color: var(--color-ink);
+  color: var(--color-yellow);
+  font-family: var(--font-display);
+  font-size: 15px;
+}
+
+.search-btn:disabled {
+  background-color: var(--color-dot);
+  color: var(--color-muted);
+}
+
 .label-text {
   display: block;
   font-size: 11px;
   letter-spacing: 0.08em;
   font-family: var(--font-body-bold);
+}
+
+.label-text .title-search-row {
+  gap: 0;
+}
+
+.search-results {
+  border: var(--border-m);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.search-results li + li {
+  border-top: var(--border-s);
+}
+
+.search-result {
+  width: 100%;
+  text-align: left;
+  display: grid;
+  column-gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-2) 10px;
+}
+
+.search-result-title {
+  font-size: 14px;
+  font-family: var(--font-body-bold);
+}
+
+.search-result:active {
+  background-color: var(--color-yellow);
 }
 
 .btn-tap-size {

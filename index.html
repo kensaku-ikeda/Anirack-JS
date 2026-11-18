@@ -90,17 +90,30 @@
           <div class="btn-tap-size"></div>
         </div>
         <form>
-          <label for="title">
-            <span class="label-text">TITLE / タイトル</span>
-            <input
-              type="text"
-              id="title"
-              class="title-input"
-              name="content-title"
-              placeholder="作品の名前を入力してください"
-              required
-            />
-          </label>
+          <div>
+            <label for="title">
+              <span class="label-text">TITLE / タイトル</span>
+            </label>
+            <div class="title-search-row">
+              <input
+                type="text"
+                id="title"
+                class="title-input"
+                name="content-title"
+                placeholder="作品の名前を入力してください"
+                required
+              />
+              <button type="button" class="search-btn">検索</button>
+            </div>
+          </div>
+
+          <div class="search-area">
+            <p class="search-count"></p>
+            <ul class="search-results hidden"></ul>
+            <p class="search-status hidden" role="status"></p>
+            <p class="api-credit">作品データ:AniList API</p>
+          </div>
+
           <label for="add-review-text">
             <span class="label-text">REVIEW / 感想</span>
             <textarea

@@ -1,12 +1,14 @@
 // 要素の取得
 const form = document.querySelector("form");
-
 const shelfList = document.querySelector(".shelf-list");
 const input = document.getElementById("title");
 const titleRename = document.getElementById("title-rename");
 const editReviewText = document.getElementById("edit-review-text");
 const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
+const searchBtn = document.querySelector(".search-btn");
+const searchResults = document.querySelector(".search-results");
+const searchStatus = document.querySelector(".search-status");
 const editSaveBtn = document.querySelector(".edit-save-btn");
 const contentDeleteBtn = document.querySelector(".content-delete-btn");
 const deleteConfirm = document.querySelector(".delete-confirm");
@@ -56,6 +58,82 @@ form.addEventListener("submit", (event) => {
     addDialog.close();
     renderList();
     localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+  }
+});
+
+// 検索ボタン
+searchBtn.addEventListener("click", async () => {
+  searchResults.textContent = "";
+  searchResults.classList.add("hidden");
+  searchStatus.classList.add("hidden");
+  if (input.value === "") {
+    input.setCustomValidity("タイトルを入力してください");
+    input.reportValidity();
+  } else {
+    searchBtn.disabled = true;
+    searchBtn.textContent = "検索中...";
+    try {
+      const response = await fetch("https://graphql.anilist.co", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: `query ($search: String) {
+        Page {
+          media (type: ANIME, search: $search) {
+            id
+            title {
+              native
+              english
+              romaji
+            }
+          }
+        }
+      }`,
+          variables: {
+            search: input.value,
+          },
+        }),
+      });
+      const json = await response.json();
+      const media = json.data.Page.media;
+      if (media.length === 0) {
+        searchStatus.classList.remove("hidden");
+        searchStatus.textContent =
+          "見つかりませんでした。そのまま手で入力して保存できます";
+      } else {
+        searchResults.classList.remove("hidden");
+        media.forEach((obj) => {
+          const list = document.createElement("li");
+          const button = document.createElement("button");
+          const span = document.createElement("span");
+          list.appendChild(button);
+          button.setAttribute("type", "button");
+          button.classList.add("search-result");
+          button.appendChild(span);
+          if (obj.title.native !== null) {
+            span.textContent = obj.title.native;
+          } else if (obj.title.english !== null) {
+            span.textContent = obj.title.english;
+          } else {
+            span.textContent = obj.title.romaji;
+          }
+          span.classList.add("search-result-title");
+          button.addEventListener("click", () => {
+            input.value = button.textContent;
+          });
+          searchResults.appendChild(list);
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      searchStatus.classList.remove("hidden");
+      searchStatus.textContent =
+        "検索できませんでした。時間をおいて、もう一度お試しください";
+    }
+    searchBtn.disabled = false;
+    searchBtn.textContent = "検索";
   }
 });
 

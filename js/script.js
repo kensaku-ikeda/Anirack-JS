@@ -8,6 +8,7 @@ const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
 const searchBtn = document.querySelector(".search-btn");
 const searchResults = document.querySelector(".search-results");
+const searchStatus = document.querySelector(".search-status");
 const editSaveBtn = document.querySelector(".edit-save-btn");
 const contentDeleteBtn = document.querySelector(".content-delete-btn");
 const deleteConfirm = document.querySelector(".delete-confirm");
@@ -64,6 +65,7 @@ form.addEventListener("submit", (event) => {
 searchBtn.addEventListener("click", async () => {
   searchResults.textContent = "";
   searchResults.classList.add("hidden");
+  searchStatus.classList.add("hidden");
   if (input.value === "") {
     input.setCustomValidity("タイトルを入力してください");
     input.reportValidity();
@@ -93,22 +95,28 @@ searchBtn.addEventListener("click", async () => {
     });
     const json = await response.json();
     const media = json.data.Page.media;
-    searchResults.classList.remove("hidden");
-    media.forEach((obj) => {
-      const list = document.createElement("li");
-      const button = document.createElement("button");
-      const span = document.createElement("span");
-      list.appendChild(button);
-      button.setAttribute("type", "button");
-      button.classList.add("search-result");
-      button.appendChild(span);
-      span.textContent = obj.title.native;
-      span.classList.add("search-result-title");
-      button.addEventListener("click", () => {
-        input.value = button.textContent;
+    if (media.length === 0) {
+      searchStatus.classList.remove("hidden");
+      searchStatus.textContent =
+        "見つかりませんでした。そのまま手で入力して保存できます";
+    } else {
+      searchResults.classList.remove("hidden");
+      media.forEach((obj) => {
+        const list = document.createElement("li");
+        const button = document.createElement("button");
+        const span = document.createElement("span");
+        list.appendChild(button);
+        button.setAttribute("type", "button");
+        button.classList.add("search-result");
+        button.appendChild(span);
+        span.textContent = obj.title.native;
+        span.classList.add("search-result-title");
+        button.addEventListener("click", () => {
+          input.value = button.textContent;
+        });
+        searchResults.appendChild(list);
       });
-      searchResults.appendChild(list);
-    });
+    }
     searchBtn.disabled = false;
     searchBtn.textContent = "検索";
   }

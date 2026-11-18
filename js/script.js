@@ -72,13 +72,14 @@ searchBtn.addEventListener("click", async () => {
   } else {
     searchBtn.disabled = true;
     searchBtn.textContent = "検索中...";
-    const response = await fetch("https://graphql.anilist.co", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: `query ($search: String) {
+    try {
+      const response = await fetch("https://graphql.anilist.co", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: `query ($search: String) {
         Page {
           media (type: ANIME, search: $search) {
             id
@@ -88,34 +89,40 @@ searchBtn.addEventListener("click", async () => {
           }
         }
       }`,
-        variables: {
-          search: input.value,
-        },
-      }),
-    });
-    const json = await response.json();
-    const media = json.data.Page.media;
-    if (media.length === 0) {
+          variables: {
+            search: input.value,
+          },
+        }),
+      });
+      const json = await response.json();
+      const media = json.data.Page.media;
+      if (media.length === 0) {
+        searchStatus.classList.remove("hidden");
+        searchStatus.textContent =
+          "見つかりませんでした。そのまま手で入力して保存できます";
+      } else {
+        searchResults.classList.remove("hidden");
+        media.forEach((obj) => {
+          const list = document.createElement("li");
+          const button = document.createElement("button");
+          const span = document.createElement("span");
+          list.appendChild(button);
+          button.setAttribute("type", "button");
+          button.classList.add("search-result");
+          button.appendChild(span);
+          span.textContent = obj.title.native;
+          span.classList.add("search-result-title");
+          button.addEventListener("click", () => {
+            input.value = button.textContent;
+          });
+          searchResults.appendChild(list);
+        });
+      }
+    } catch (error) {
+      console.error(error);
       searchStatus.classList.remove("hidden");
       searchStatus.textContent =
-        "見つかりませんでした。そのまま手で入力して保存できます";
-    } else {
-      searchResults.classList.remove("hidden");
-      media.forEach((obj) => {
-        const list = document.createElement("li");
-        const button = document.createElement("button");
-        const span = document.createElement("span");
-        list.appendChild(button);
-        button.setAttribute("type", "button");
-        button.classList.add("search-result");
-        button.appendChild(span);
-        span.textContent = obj.title.native;
-        span.classList.add("search-result-title");
-        button.addEventListener("click", () => {
-          input.value = button.textContent;
-        });
-        searchResults.appendChild(list);
-      });
+        "検索できませんでした。時間をおいて、もう一度お試しください";
     }
     searchBtn.disabled = false;
     searchBtn.textContent = "検索";

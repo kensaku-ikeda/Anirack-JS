@@ -269,8 +269,6 @@ form {
   width: 100%;
   text-align: left;
   display: grid;
-  /* grid-template-columns: 40px 1fr; */
-  /* grid-template-rows: auto auto; */
   column-gap: var(--space-3);
   align-items: center;
   padding: var(--space-2) 10px;

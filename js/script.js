@@ -88,6 +88,11 @@ searchBtn.addEventListener("click", async () => {
               english
               romaji
             }
+            coverImage {
+              medium
+            }
+            format
+            seasonYear
           }
         }
       }`,
@@ -97,31 +102,41 @@ searchBtn.addEventListener("click", async () => {
         }),
       });
       const json = await response.json();
-      const media = json.data.Page.media;
-      if (media.length === 0) {
+      const mediaData = json.data.Page.media;
+      console.log(mediaData);
+      if (mediaData.length === 0) {
         searchStatus.classList.remove("hidden");
         searchStatus.textContent =
           "見つかりませんでした。そのまま手で入力して保存できます";
       } else {
         searchResults.classList.remove("hidden");
-        media.forEach((obj) => {
+        mediaData.forEach((obj) => {
           const list = document.createElement("li");
           const button = document.createElement("button");
-          const span = document.createElement("span");
+          const titleSpan = document.createElement("span");
+          const formatSpan = document.createElement("span");
+          const seasonYearSpan = document.createElement("span");
+          const img = document.createElement("img");
           list.appendChild(button);
           button.setAttribute("type", "button");
           button.classList.add("search-result");
-          button.appendChild(span);
+          button.appendChild(img);
+          button.appendChild(titleSpan);
+          button.appendChild(formatSpan);
+          button.appendChild(seasonYearSpan);
           if (obj.title.native !== null) {
-            span.textContent = obj.title.native;
+            titleSpan.textContent = obj.title.native;
           } else if (obj.title.english !== null) {
-            span.textContent = obj.title.english;
+            titleSpan.textContent = obj.title.english;
           } else {
-            span.textContent = obj.title.romaji;
+            titleSpan.textContent = obj.title.romaji;
           }
-          span.classList.add("search-result-title");
+          formatSpan.textContent = obj.format;
+          seasonYearSpan.textContent = obj.seasonYear;
+          img.setAttribute("src", obj.coverImage.medium);
+          titleSpan.classList.add("search-result-title");
           button.addEventListener("click", () => {
-            input.value = button.textContent;
+            input.value = titleSpan.textContent;
           });
           searchResults.appendChild(list);
         });

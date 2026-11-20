@@ -61,11 +61,16 @@ form.addEventListener("submit", (event) => {
     anirackContentRecords.push(contentRecord);
     form.reset();
     addDialog.close();
-    renderList();
-    localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+    saveAndDisplay();
     contentImagePath = null;
   }
 });
+
+// 保存と表示
+function saveAndDisplay() {
+  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+  renderList();
+}
 
 // 検索ボタン
 searchBtn.addEventListener("click", async () => {
@@ -249,11 +254,10 @@ editSaveBtn.addEventListener("click", () => {
       }
       return contentRecord;
     });
-    localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+    saveAndDisplay();
     titleRename.value = "";
     editReviewText.value = "";
     editDialog.close();
-    renderList();
   }
 });
 
@@ -263,8 +267,7 @@ deleteConfirmSubmitBtn.addEventListener("click", () => {
   anirackContentRecords = anirackContentRecords.filter((contentRecord) => {
     return contentRenameDialogId !== contentRecord.id;
   });
-  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
-  renderList();
+  saveAndDisplay();
   editDialog.close();
 });
 

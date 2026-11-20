@@ -38,6 +38,7 @@ let anirackContentRecords = [];
 // 間違った形式で入力しても、入力し直して保存できる
 input.addEventListener("input", () => {
   input.setCustomValidity("");
+  contentImagePath = null;
 });
 
 // フォームに入力されたものを保存
@@ -72,6 +73,7 @@ searchBtn.addEventListener("click", async () => {
   searchResults.classList.add("hidden");
   searchStatus.classList.add("hidden");
   searchCount.textContent = "";
+  contentImagePath = null;
   if (input.value === "") {
     input.setCustomValidity("タイトルを入力してください");
     input.reportValidity();

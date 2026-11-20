@@ -29,6 +29,8 @@ const openAddDialogBtn = document.querySelector(".open-add-dialog-btn");
 // グローバル変数
 let contentRenameDialogId;
 
+let contentImagePath;
+
 // 作品のデータを保存するための配列
 let anirackContentRecords = [];
 
@@ -53,12 +55,14 @@ form.addEventListener("submit", (event) => {
       title: title,
       review: review,
       id: uuid,
+      imagePath: contentImagePath,
     };
     anirackContentRecords.push(contentRecord);
     form.reset();
     addDialog.close();
     renderList();
     localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+    contentImagePath = null;
   }
 });
 
@@ -143,7 +147,7 @@ searchBtn.addEventListener("click", async () => {
           formatSpan.classList.add("meta");
           seasonYearSpan.textContent = obj.seasonYear;
           seasonYearSpan.classList.add("meta");
-          if (obj.coverImage.medium === null) {
+          if (obj.coverImage.medium == null) {
             img.classList.add("no-image");
           } else {
             img.setAttribute("src", obj.coverImage.medium);
@@ -154,6 +158,7 @@ searchBtn.addEventListener("click", async () => {
           }
           button.addEventListener("click", () => {
             input.value = titleSpan.textContent;
+            contentImagePath = obj.coverImage.medium;
           });
         });
       }
@@ -181,11 +186,24 @@ function renderList() {
   shelfList.textContent = "";
   let shelfRow;
   anirackContentRecords.forEach((contentRecord, index) => {
+    const coverImage = document.createElement("img");
     const coverButton = document.createElement("button");
     const coverTitle = document.createElement("span");
+    const div = document.createElement("div");
     coverTitle.textContent = contentRecord.title;
-    coverButton.appendChild(coverTitle);
+    coverButton.appendChild(coverImage);
     coverButton.classList.add("cover");
+    coverImage.classList.add("cover-image");
+    coverButton.appendChild(div);
+    coverButton.appendChild(coverTitle);
+    if (contentRecord.imagePath != null) {
+      coverImage.setAttribute("src", contentRecord.imagePath);
+      coverButton.classList.add("has-image");
+    } else {
+      coverButton.classList.add("no-image");
+      div.textContent = "NO IMAGE";
+      div.classList.add("cover-noimage-text");
+    }
     coverButton.setAttribute("type", "button");
     coverTitle.classList.add("cover-title");
     coverButton.addEventListener("click", () => {
@@ -261,6 +279,7 @@ deleteConfirmCancelBtn.addEventListener("click", () => {
 // モーダルの開閉
 openAddDialogBtn.addEventListener("click", () => {
   addDialog.showModal();
+  contentImagePath = null;
 });
 
 addDialog.addEventListener("click", (event) => {

@@ -152,6 +152,26 @@ main {
   overflow: hidden;
 }
 
+.cover.has-image {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-dot);
+  padding: 0px;
+}
+
+.cover.has-image .cover-title {
+  position: relative;
+  margin: var(--space-1);
+}
+
+.cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .cover-title {
   font-size: 10px;
   font-family: var(--font-body-bold);
@@ -300,13 +320,26 @@ form {
   background: var(--color-dot);
 }
 
-.search-result-cover.no-image {
+.no-image {
+  position: relative;
   background: var(--color-dot);
   background-image: repeating-linear-gradient(
     135deg,
     var(--color-stripe) 0 6px,
     var(--color-dot) 6px 12px
   );
+}
+
+.cover-noimage-text {
+  position: absolute;
+  top: 38%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 10px;
+  font-family: var(--font-body-bold);
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
 }
 
 .search-result:active {

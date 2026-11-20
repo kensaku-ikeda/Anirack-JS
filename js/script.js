@@ -8,6 +8,7 @@ const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
 const searchBtn = document.querySelector(".search-btn");
 const searchResults = document.querySelector(".search-results");
+const searchCount = document.querySelector(".search-count");
 const searchStatus = document.querySelector(".search-status");
 const editSaveBtn = document.querySelector(".edit-save-btn");
 const contentDeleteBtn = document.querySelector(".content-delete-btn");
@@ -66,6 +67,7 @@ searchBtn.addEventListener("click", async () => {
   searchResults.textContent = "";
   searchResults.classList.add("hidden");
   searchStatus.classList.add("hidden");
+  searchCount.textContent = "";
   if (input.value === "") {
     input.setCustomValidity("タイトルを入力してください");
     input.reportValidity();
@@ -88,6 +90,11 @@ searchBtn.addEventListener("click", async () => {
               english
               romaji
             }
+            coverImage {
+              medium
+            }
+            format
+            seasonYear
           }
         }
       }`,
@@ -97,33 +104,57 @@ searchBtn.addEventListener("click", async () => {
         }),
       });
       const json = await response.json();
-      const media = json.data.Page.media;
-      if (media.length === 0) {
+      const mediaData = json.data.Page.media;
+      const mediaCount = mediaData.length;
+      searchCount.textContent = `検索結果${mediaCount}件`;
+      if (mediaData.length === 0) {
         searchStatus.classList.remove("hidden");
         searchStatus.textContent =
           "見つかりませんでした。そのまま手で入力して保存できます";
       } else {
         searchResults.classList.remove("hidden");
-        media.forEach((obj) => {
+        mediaData.forEach((obj) => {
           const list = document.createElement("li");
           const button = document.createElement("button");
-          const span = document.createElement("span");
+          const titleSpan = document.createElement("span");
+          const div = document.createElement("div");
+          const formatSpan = document.createElement("span");
+          const seasonYearSpan = document.createElement("span");
+          const img = document.createElement("img");
           list.appendChild(button);
           button.setAttribute("type", "button");
           button.classList.add("search-result");
-          button.appendChild(span);
-          if (obj.title.native !== null) {
-            span.textContent = obj.title.native;
-          } else if (obj.title.english !== null) {
-            span.textContent = obj.title.english;
-          } else {
-            span.textContent = obj.title.romaji;
-          }
-          span.classList.add("search-result-title");
-          button.addEventListener("click", () => {
-            input.value = button.textContent;
-          });
+          button.appendChild(img);
+          button.appendChild(titleSpan);
+          button.appendChild(div);
+          div.appendChild(seasonYearSpan);
+          div.appendChild(formatSpan);
+          div.classList.add("meta-list");
           searchResults.appendChild(list);
+          img.classList.add("search-result-cover");
+          if (obj.title.native !== null) {
+            titleSpan.textContent = obj.title.native;
+          } else if (obj.title.english !== null) {
+            titleSpan.textContent = obj.title.english;
+          } else {
+            titleSpan.textContent = obj.title.romaji;
+          }
+          formatSpan.textContent = obj.format;
+          formatSpan.classList.add("meta");
+          seasonYearSpan.textContent = obj.seasonYear;
+          seasonYearSpan.classList.add("meta");
+          if (obj.coverImage.medium === null) {
+            img.classList.add("no-image");
+          } else {
+            img.setAttribute("src", obj.coverImage.medium);
+          }
+          titleSpan.classList.add("search-result-title");
+          if (obj.seasonYear === null) {
+            seasonYearSpan.textContent = "年不明";
+          }
+          button.addEventListener("click", () => {
+            input.value = titleSpan.textContent;
+          });
         });
       }
     } catch (error) {

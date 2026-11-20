@@ -5,6 +5,7 @@
   --color-yellow: #ffe600;
   --color-pink: #ff2e88;
   --color-blue: #3d5afe;
+  --color-stripe: #d6d6d6;
   --color-error: #c4006a;
   --color-muted: #767676;
   --color-dot: #e4e4e4;
@@ -269,6 +270,8 @@ form {
   width: 100%;
   text-align: left;
   display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: auto auto;
   column-gap: var(--space-3);
   align-items: center;
   padding: var(--space-2) 10px;
@@ -277,6 +280,33 @@ form {
 .search-result-title {
   font-size: 14px;
   font-family: var(--font-body-bold);
+}
+
+.meta-list {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.meta {
+  font-size: 11px;
+  color: var(--color-muted);
+}
+
+.search-result-cover {
+  grid-row: 1 / 3;
+  width: 40px;
+  height: 56px;
+  border: var(--border-s);
+  background: var(--color-dot);
+}
+
+.search-result-cover.no-image {
+  background: var(--color-dot);
+  background-image: repeating-linear-gradient(
+    135deg,
+    var(--color-stripe) 0 6px,
+    var(--color-dot) 6px 12px
+  );
 }
 
 .search-result:active {

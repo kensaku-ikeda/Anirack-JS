@@ -5,9 +5,9 @@
 - 機能の軸は CRUD（追加・一覧・編集・削除）と localStorage での保存です
 - 目的は「全部自分で書いて、面接で自分の言葉で説明できる成果物」を作ることです
 
-## 学習の現在地（最終更新：2026-11-16）
-- 学んだこと（説明し直さなくてよい）：HTML/CSS、JavaScript の基本（DOM 操作、イベント、classList）、localStorage での保存
-- これから学ぶこと（初めて扱う前提で接する）：外部 API 連携（Jikan）を通じた非同期処理
+## 学習の現在地（最終更新：2026-11-22）
+- 学んだこと（説明し直さなくてよい）：HTML/CSS、JavaScript の基本（DOM 操作、イベント、classList）、localStorage での保存、外部 API 連携（AniList の GraphQL）と非同期処理（fetch・async/await・try/catch）
+- これから学ぶこと（初めて扱う前提で接する）：React＋TypeScript
 - この節は節目（Anirack-JS 完成時、React＋TypeScript に入るときなど）にだけ、学習者の許可を得て更新する
 
 ## このルールの理由

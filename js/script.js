@@ -33,20 +33,38 @@ const coversPerShelfRow = 3;
 
 let anirackContentRecords = [];
 
+const animeSearchQuery = `query ($search: String) {
+        Page {
+          media (type: ANIME, search: $search) {
+            id
+            title {
+              native
+              english
+              romaji
+            }
+            coverImage {
+              medium
+            }
+            format
+            seasonYear
+          }
+        }
+      }`;
+
 // 間違った形式で入力しても、入力し直して保存できる
 input.addEventListener("input", () => {
   input.setCustomValidity("");
   contentImagePath = null;
 });
 
-function saveAndDisplay() {
-  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
-  renderList();
-}
-
 function setInputValidity(element) {
   element.setCustomValidity("タイトルを入力してください");
   element.reportValidity();
+}
+
+function saveAndDisplay() {
+  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+  renderList();
 }
 
 // フォームに入力されたものを保存
@@ -92,23 +110,7 @@ searchBtn.addEventListener("click", async () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          query: `query ($search: String) {
-        Page {
-          media (type: ANIME, search: $search) {
-            id
-            title {
-              native
-              english
-              romaji
-            }
-            coverImage {
-              medium
-            }
-            format
-            seasonYear
-          }
-        }
-      }`,
+          query: animeSearchQuery,
           variables: {
             search: input.value,
           },

@@ -265,15 +265,13 @@ deleteConfirmSubmitBtn.addEventListener("click", () => {
   editDialog.close();
 });
 
-contentDeleteBtn.addEventListener("click", () => {
+function toggleDeleteConfirm() {
   deleteConfirm.classList.toggle("hidden");
   contentDeleteBtn.classList.toggle("hidden");
-});
+}
 
-deleteConfirmCancelBtn.addEventListener("click", () => {
-  deleteConfirm.classList.toggle("hidden");
-  contentDeleteBtn.classList.toggle("hidden");
-});
+contentDeleteBtn.addEventListener("click", toggleDeleteConfirm);
+deleteConfirmCancelBtn.addEventListener("click", toggleDeleteConfirm);
 
 openAddDialogBtn.addEventListener("click", () => {
   addDialog.showModal();

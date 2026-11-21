@@ -44,6 +44,11 @@ function saveAndDisplay() {
   renderList();
 }
 
+function setInputValidity(element) {
+  element.setCustomValidity("タイトルを入力してください");
+  element.reportValidity();
+}
+
 // フォームに入力されたものを保存
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // フォームのページリロードを無効
@@ -52,8 +57,7 @@ form.addEventListener("submit", (event) => {
   const uuid = crypto.randomUUID();
   // 空白のみの場合は保存できないようにする
   if (title === "") {
-    input.setCustomValidity("タイトルを入力してください");
-    input.reportValidity();
+    setInputValidity(input);
   } else {
     const contentRecord = {
       title: title,
@@ -77,8 +81,7 @@ searchBtn.addEventListener("click", async () => {
   searchCount.textContent = "";
   contentImagePath = null;
   if (input.value === "") {
-    input.setCustomValidity("タイトルを入力してください");
-    input.reportValidity();
+    setInputValidity(input);
   } else {
     searchBtn.disabled = true;
     searchBtn.textContent = "検索中...";
@@ -239,8 +242,7 @@ editSaveBtn.addEventListener("click", () => {
   const rewriteReviewText = editReviewText.value.trim();
 
   if (renameInput === "") {
-    titleRename.setCustomValidity("タイトルを入力してください");
-    titleRename.reportValidity();
+    setInputValidity(titleRename);
   } else {
     anirackContentRecords = anirackContentRecords.map((contentRecord) => {
       if (contentRecord.id === contentRenameDialogId) {

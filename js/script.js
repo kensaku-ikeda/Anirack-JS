@@ -1,4 +1,3 @@
-// 要素の取得
 const form = document.querySelector("form");
 const shelfList = document.querySelector(".shelf-list");
 const input = document.getElementById("title");
@@ -26,22 +25,17 @@ const addCancelBtn = document.querySelector(".add-cancel-btn");
 const editCancelBtn = document.querySelector(".edit-cancel-btn");
 const openAddDialogBtn = document.querySelector(".open-add-dialog-btn");
 
-// グローバル変数
 let contentRenameDialogId;
-
 let contentImagePath;
 
-// 作品のデータを保存するための配列
 let anirackContentRecords = [];
 
-// C（Create / 作成）
 // 間違った形式で入力しても、入力し直して保存できる
 input.addEventListener("input", () => {
   input.setCustomValidity("");
   contentImagePath = null;
 });
 
-// 保存と表示
 function saveAndDisplay() {
   localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
   renderList();
@@ -72,7 +66,7 @@ form.addEventListener("submit", (event) => {
   }
 });
 
-// 検索ボタン
+// AniList APIで作品を検索し、検索結果を表示する
 searchBtn.addEventListener("click", async () => {
   searchResults.textContent = "";
   searchResults.classList.add("hidden");
@@ -180,7 +174,6 @@ searchBtn.addEventListener("click", async () => {
   }
 });
 
-// R（Read / 読み取り）
 // ページを開いたときにローカルストレージから読み取って、データを保持
 const savedRecords = localStorage.getItem("Records");
 if (savedRecords) {
@@ -237,7 +230,6 @@ function renderList() {
   });
 }
 
-// U（Update / 更新）
 // 既存のデータを書き換えて保存する
 editSaveBtn.addEventListener("click", () => {
   const renameInput = titleRename.value.trim();
@@ -261,7 +253,6 @@ editSaveBtn.addEventListener("click", () => {
   }
 });
 
-// D（Delete / 削除）
 // 既存のデータを削除する
 deleteConfirmSubmitBtn.addEventListener("click", () => {
   anirackContentRecords = anirackContentRecords.filter((contentRecord) => {
@@ -281,7 +272,6 @@ deleteConfirmCancelBtn.addEventListener("click", () => {
   contentDeleteBtn.classList.toggle("hidden");
 });
 
-// モーダルの開閉
 openAddDialogBtn.addEventListener("click", () => {
   addDialog.showModal();
   contentImagePath = null;

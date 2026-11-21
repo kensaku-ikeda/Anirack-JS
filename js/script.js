@@ -77,6 +77,45 @@ function returnTitlePriority(obj) {
   }
 }
 
+function returnOneSearchList(obj) {
+  const list = document.createElement("li");
+  const button = document.createElement("button");
+  const titleSpan = document.createElement("span");
+  const div = document.createElement("div");
+  const formatSpan = document.createElement("span");
+  const seasonYearSpan = document.createElement("span");
+  const img = document.createElement("img");
+  list.appendChild(button);
+  button.setAttribute("type", "button");
+  button.classList.add("search-result");
+  button.appendChild(img);
+  button.appendChild(titleSpan);
+  button.appendChild(div);
+  div.appendChild(seasonYearSpan);
+  div.appendChild(formatSpan);
+  div.classList.add("meta-list");
+  img.classList.add("search-result-cover");
+  titleSpan.textContent = returnTitlePriority(obj);
+  formatSpan.textContent = obj.format;
+  formatSpan.classList.add("meta");
+  seasonYearSpan.textContent = obj.seasonYear;
+  seasonYearSpan.classList.add("meta");
+  if (obj.coverImage.medium == null) {
+    img.classList.add("no-image");
+  } else {
+    img.setAttribute("src", obj.coverImage.medium);
+  }
+  titleSpan.classList.add("search-result-title");
+  if (obj.seasonYear === null) {
+    seasonYearSpan.textContent = "年不明";
+  }
+  button.addEventListener("click", () => {
+    input.value = titleSpan.textContent;
+    contentImagePath = obj.coverImage.medium;
+  });
+  return list;
+}
+
 // フォームに入力されたものを保存
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // フォームのページリロードを無効
@@ -137,42 +176,8 @@ searchBtn.addEventListener("click", async () => {
       } else {
         searchResults.classList.remove("hidden");
         mediaData.forEach((obj) => {
-          const list = document.createElement("li");
-          const button = document.createElement("button");
-          const titleSpan = document.createElement("span");
-          const div = document.createElement("div");
-          const formatSpan = document.createElement("span");
-          const seasonYearSpan = document.createElement("span");
-          const img = document.createElement("img");
-          list.appendChild(button);
-          button.setAttribute("type", "button");
-          button.classList.add("search-result");
-          button.appendChild(img);
-          button.appendChild(titleSpan);
-          button.appendChild(div);
-          div.appendChild(seasonYearSpan);
-          div.appendChild(formatSpan);
-          div.classList.add("meta-list");
+          const list = returnOneSearchList(obj);
           searchResults.appendChild(list);
-          img.classList.add("search-result-cover");
-          titleSpan.textContent = returnTitlePriority(obj);
-          formatSpan.textContent = obj.format;
-          formatSpan.classList.add("meta");
-          seasonYearSpan.textContent = obj.seasonYear;
-          seasonYearSpan.classList.add("meta");
-          if (obj.coverImage.medium == null) {
-            img.classList.add("no-image");
-          } else {
-            img.setAttribute("src", obj.coverImage.medium);
-          }
-          titleSpan.classList.add("search-result-title");
-          if (obj.seasonYear === null) {
-            seasonYearSpan.textContent = "年不明";
-          }
-          button.addEventListener("click", () => {
-            input.value = titleSpan.textContent;
-            contentImagePath = obj.coverImage.medium;
-          });
         });
       }
     } catch (error) {

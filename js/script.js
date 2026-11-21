@@ -5,6 +5,7 @@ const titleRename = document.getElementById("title-rename");
 const editReviewText = document.getElementById("edit-review-text");
 const editDialog = document.querySelector(".edit-dialog");
 const addDialog = document.querySelector(".add-dialog");
+const searchTypeBtns = document.querySelectorAll(".search-type-btn");
 const searchBtn = document.querySelector(".search-btn");
 const searchResults = document.querySelector(".search-results");
 const searchCount = document.querySelector(".search-count");
@@ -33,9 +34,9 @@ const coversPerShelfRow = 3;
 
 let anirackContentRecords = [];
 
-const animeSearchQuery = `query ($search: String) {
+const mediaSearchQuery = `query ($type: MediaType, $search: String) {
         Page {
-          media (type: ANIME, search: $search) {
+          media (type: $type, search: $search) {
             id
             title {
               native
@@ -46,7 +47,9 @@ const animeSearchQuery = `query ($search: String) {
               medium
             }
             format
-            seasonYear
+            startDate{
+              year
+            }
           }
         }
       }`;
@@ -98,7 +101,7 @@ function returnOneSearchList(obj) {
   titleSpan.textContent = returnTitlePriority(obj);
   formatSpan.textContent = obj.format;
   formatSpan.classList.add("meta");
-  seasonYearSpan.textContent = obj.seasonYear;
+  seasonYearSpan.textContent = obj.startDate.year;
   seasonYearSpan.classList.add("meta");
   if (obj.coverImage.medium == null) {
     img.classList.add("no-image");
@@ -106,7 +109,7 @@ function returnOneSearchList(obj) {
     img.setAttribute("src", obj.coverImage.medium);
   }
   titleSpan.classList.add("search-result-title");
-  if (obj.seasonYear === null) {
+  if (obj.startDate.year === null) {
     seasonYearSpan.textContent = "年不明";
   }
   button.addEventListener("click", () => {
@@ -115,6 +118,14 @@ function returnOneSearchList(obj) {
   });
   return list;
 }
+
+searchTypeBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    searchTypeBtns.forEach((b) => {
+      b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+    });
+  });
+});
 
 // フォームに入力されたものを保存
 form.addEventListener("submit", (event) => {
@@ -147,6 +158,10 @@ searchBtn.addEventListener("click", async () => {
   searchStatus.classList.add("hidden");
   searchCount.textContent = "";
   contentImagePath = null;
+  const selectedSearchTypebtn = document.querySelector(
+    '.search-type-btn[aria-pressed="true"]',
+  );
+  const selectedSearchType = selectedSearchTypebtn.dataset.type;
   if (input.value === "") {
     setInputValidity(input);
   } else {
@@ -159,8 +174,9 @@ searchBtn.addEventListener("click", async () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          query: animeSearchQuery,
+          query: mediaSearchQuery,
           variables: {
+            type: selectedSearchType,
             search: input.value,
           },
         }),

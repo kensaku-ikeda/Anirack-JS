@@ -67,6 +67,16 @@ function saveAndDisplay() {
   renderList();
 }
 
+function returnTitlePriority(obj) {
+  if (obj.title.native !== null) {
+    return obj.title.native;
+  } else if (obj.title.english !== null) {
+    return obj.title.english;
+  } else {
+    return obj.title.romaji;
+  }
+}
+
 // フォームに入力されたものを保存
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // フォームのページリロードを無効
@@ -145,13 +155,7 @@ searchBtn.addEventListener("click", async () => {
           div.classList.add("meta-list");
           searchResults.appendChild(list);
           img.classList.add("search-result-cover");
-          if (obj.title.native !== null) {
-            titleSpan.textContent = obj.title.native;
-          } else if (obj.title.english !== null) {
-            titleSpan.textContent = obj.title.english;
-          } else {
-            titleSpan.textContent = obj.title.romaji;
-          }
+          titleSpan.textContent = returnTitlePriority(obj);
           formatSpan.textContent = obj.format;
           formatSpan.classList.add("meta");
           seasonYearSpan.textContent = obj.seasonYear;

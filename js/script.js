@@ -28,6 +28,9 @@ const openAddDialogBtn = document.querySelector(".open-add-dialog-btn");
 let contentRenameDialogId;
 let contentImagePath;
 
+// CSS側の棚の列数と合わせること --shelf-columnsを書き換えればOKです
+const coversPerShelfRow = 3;
+
 let anirackContentRecords = [];
 
 // 間違った形式で入力しても、入力し直して保存できる
@@ -215,7 +218,7 @@ function renderList() {
       contentDeleteBtn.classList.remove("hidden");
       deleteConfirm.classList.add("hidden");
     });
-    if (index % 3 === 0) {
+    if (index % coversPerShelfRow === 0) {
       const shelf = document.createElement("div");
       shelf.classList.add("shelf");
       const shelfBoard = document.createElement("div");

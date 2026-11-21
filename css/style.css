@@ -44,6 +44,9 @@
 
   /* タップ領域の最小値 */
   --tap: 44px;
+
+  /* 1段の棚に並べる冊数 JSと合わせてください coversPerShelfRowという変数です */
+  --shelf-columns: 3;
 }
 
 /* ローカルフォント */
@@ -133,7 +136,7 @@ main {
 
 .shelf-row {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--shelf-columns), minmax(0, 1fr));
   padding: 0 var(--space-2);
   gap: var(--space-3);
   align-items: end;

@@ -1,4 +1,3 @@
-// 要素の取得
 const form = document.querySelector("form");
 const shelfList = document.querySelector(".shelf-list");
 const input = document.getElementById("title");
@@ -26,68 +25,15 @@ const addCancelBtn = document.querySelector(".add-cancel-btn");
 const editCancelBtn = document.querySelector(".edit-cancel-btn");
 const openAddDialogBtn = document.querySelector(".open-add-dialog-btn");
 
-// グローバル変数
 let contentRenameDialogId;
-
 let contentImagePath;
 
-// 作品のデータを保存するための配列
+// CSS側の棚の列数と合わせること --shelf-columnsを書き換えればOKです
+const coversPerShelfRow = 3;
+
 let anirackContentRecords = [];
 
-// C（Create / 作成）
-// 間違った形式で入力しても、入力し直して保存できる
-input.addEventListener("input", () => {
-  input.setCustomValidity("");
-  contentImagePath = null;
-});
-
-// フォームに入力されたものを保存
-form.addEventListener("submit", (event) => {
-  event.preventDefault(); // フォームのページリロードを無効
-  const title = form.elements["content-title"].value.trim();
-  const review = form.elements["content-review"].value.trim();
-  const uuid = crypto.randomUUID();
-  // 空白のみの場合は保存できないようにする
-  if (title === "") {
-    input.setCustomValidity("タイトルを入力してください");
-    input.reportValidity();
-  } else {
-    const contentRecord = {
-      title: title,
-      review: review,
-      id: uuid,
-      imagePath: contentImagePath,
-    };
-    anirackContentRecords.push(contentRecord);
-    form.reset();
-    addDialog.close();
-    renderList();
-    localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
-    contentImagePath = null;
-  }
-});
-
-// 検索ボタン
-searchBtn.addEventListener("click", async () => {
-  searchResults.textContent = "";
-  searchResults.classList.add("hidden");
-  searchStatus.classList.add("hidden");
-  searchCount.textContent = "";
-  contentImagePath = null;
-  if (input.value === "") {
-    input.setCustomValidity("タイトルを入力してください");
-    input.reportValidity();
-  } else {
-    searchBtn.disabled = true;
-    searchBtn.textContent = "検索中...";
-    try {
-      const response = await fetch("https://graphql.anilist.co", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query: `query ($search: String) {
+const animeSearchQuery = `query ($search: String) {
         Page {
           media (type: ANIME, search: $search) {
             id
@@ -103,7 +49,117 @@ searchBtn.addEventListener("click", async () => {
             seasonYear
           }
         }
-      }`,
+      }`;
+
+// 間違った形式で入力しても、入力し直して保存できる
+input.addEventListener("input", () => {
+  input.setCustomValidity("");
+  contentImagePath = null;
+});
+
+function setInputValidity(element) {
+  element.setCustomValidity("タイトルを入力してください");
+  element.reportValidity();
+}
+
+function saveAndDisplay() {
+  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+  renderList();
+}
+
+function returnTitlePriority(obj) {
+  if (obj.title.native !== null) {
+    return obj.title.native;
+  } else if (obj.title.english !== null) {
+    return obj.title.english;
+  } else {
+    return obj.title.romaji;
+  }
+}
+
+function returnOneSearchList(obj) {
+  const list = document.createElement("li");
+  const button = document.createElement("button");
+  const titleSpan = document.createElement("span");
+  const div = document.createElement("div");
+  const formatSpan = document.createElement("span");
+  const seasonYearSpan = document.createElement("span");
+  const img = document.createElement("img");
+  list.appendChild(button);
+  button.setAttribute("type", "button");
+  button.classList.add("search-result");
+  button.appendChild(img);
+  button.appendChild(titleSpan);
+  button.appendChild(div);
+  div.appendChild(seasonYearSpan);
+  div.appendChild(formatSpan);
+  div.classList.add("meta-list");
+  img.classList.add("search-result-cover");
+  titleSpan.textContent = returnTitlePriority(obj);
+  formatSpan.textContent = obj.format;
+  formatSpan.classList.add("meta");
+  seasonYearSpan.textContent = obj.seasonYear;
+  seasonYearSpan.classList.add("meta");
+  if (obj.coverImage.medium == null) {
+    img.classList.add("no-image");
+  } else {
+    img.setAttribute("src", obj.coverImage.medium);
+  }
+  titleSpan.classList.add("search-result-title");
+  if (obj.seasonYear === null) {
+    seasonYearSpan.textContent = "年不明";
+  }
+  button.addEventListener("click", () => {
+    input.value = titleSpan.textContent;
+    contentImagePath = obj.coverImage.medium;
+  });
+  return list;
+}
+
+// フォームに入力されたものを保存
+form.addEventListener("submit", (event) => {
+  event.preventDefault(); // フォームのページリロードを無効
+  const title = form.elements["content-title"].value.trim();
+  const review = form.elements["content-review"].value.trim();
+  const uuid = crypto.randomUUID();
+  // 空白のみの場合は保存できないようにする
+  if (title === "") {
+    setInputValidity(input);
+  } else {
+    const contentRecord = {
+      title: title,
+      review: review,
+      id: uuid,
+      imagePath: contentImagePath,
+    };
+    anirackContentRecords.push(contentRecord);
+    form.reset();
+    addDialog.close();
+    saveAndDisplay();
+    contentImagePath = null;
+  }
+});
+
+// AniList APIで作品を検索し、検索結果を表示する
+searchBtn.addEventListener("click", async () => {
+  searchResults.textContent = "";
+  searchResults.classList.add("hidden");
+  searchStatus.classList.add("hidden");
+  searchCount.textContent = "";
+  contentImagePath = null;
+  if (input.value === "") {
+    setInputValidity(input);
+  } else {
+    searchBtn.disabled = true;
+    searchBtn.textContent = "検索中...";
+    try {
+      const response = await fetch("https://graphql.anilist.co", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: animeSearchQuery,
           variables: {
             search: input.value,
           },
@@ -120,48 +176,8 @@ searchBtn.addEventListener("click", async () => {
       } else {
         searchResults.classList.remove("hidden");
         mediaData.forEach((obj) => {
-          const list = document.createElement("li");
-          const button = document.createElement("button");
-          const titleSpan = document.createElement("span");
-          const div = document.createElement("div");
-          const formatSpan = document.createElement("span");
-          const seasonYearSpan = document.createElement("span");
-          const img = document.createElement("img");
-          list.appendChild(button);
-          button.setAttribute("type", "button");
-          button.classList.add("search-result");
-          button.appendChild(img);
-          button.appendChild(titleSpan);
-          button.appendChild(div);
-          div.appendChild(seasonYearSpan);
-          div.appendChild(formatSpan);
-          div.classList.add("meta-list");
+          const list = returnOneSearchList(obj);
           searchResults.appendChild(list);
-          img.classList.add("search-result-cover");
-          if (obj.title.native !== null) {
-            titleSpan.textContent = obj.title.native;
-          } else if (obj.title.english !== null) {
-            titleSpan.textContent = obj.title.english;
-          } else {
-            titleSpan.textContent = obj.title.romaji;
-          }
-          formatSpan.textContent = obj.format;
-          formatSpan.classList.add("meta");
-          seasonYearSpan.textContent = obj.seasonYear;
-          seasonYearSpan.classList.add("meta");
-          if (obj.coverImage.medium == null) {
-            img.classList.add("no-image");
-          } else {
-            img.setAttribute("src", obj.coverImage.medium);
-          }
-          titleSpan.classList.add("search-result-title");
-          if (obj.seasonYear === null) {
-            seasonYearSpan.textContent = "年不明";
-          }
-          button.addEventListener("click", () => {
-            input.value = titleSpan.textContent;
-            contentImagePath = obj.coverImage.medium;
-          });
         });
       }
     } catch (error) {
@@ -175,7 +191,6 @@ searchBtn.addEventListener("click", async () => {
   }
 });
 
-// R（Read / 読み取り）
 // ページを開いたときにローカルストレージから読み取って、データを保持
 const savedRecords = localStorage.getItem("Records");
 if (savedRecords) {
@@ -217,7 +232,7 @@ function renderList() {
       contentDeleteBtn.classList.remove("hidden");
       deleteConfirm.classList.add("hidden");
     });
-    if (index % 3 === 0) {
+    if (index % coversPerShelfRow === 0) {
       const shelf = document.createElement("div");
       shelf.classList.add("shelf");
       const shelfBoard = document.createElement("div");
@@ -232,15 +247,13 @@ function renderList() {
   });
 }
 
-// U（Update / 更新）
 // 既存のデータを書き換えて保存する
 editSaveBtn.addEventListener("click", () => {
   const renameInput = titleRename.value.trim();
   const rewriteReviewText = editReviewText.value.trim();
 
   if (renameInput === "") {
-    titleRename.setCustomValidity("タイトルを入力してください");
-    titleRename.reportValidity();
+    setInputValidity(titleRename);
   } else {
     anirackContentRecords = anirackContentRecords.map((contentRecord) => {
       if (contentRecord.id === contentRenameDialogId) {
@@ -249,36 +262,30 @@ editSaveBtn.addEventListener("click", () => {
       }
       return contentRecord;
     });
-    localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+    saveAndDisplay();
     titleRename.value = "";
     editReviewText.value = "";
     editDialog.close();
-    renderList();
   }
 });
 
-// D（Delete / 削除）
 // 既存のデータを削除する
 deleteConfirmSubmitBtn.addEventListener("click", () => {
   anirackContentRecords = anirackContentRecords.filter((contentRecord) => {
     return contentRenameDialogId !== contentRecord.id;
   });
-  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
-  renderList();
+  saveAndDisplay();
   editDialog.close();
 });
 
-contentDeleteBtn.addEventListener("click", () => {
+function toggleDeleteConfirm() {
   deleteConfirm.classList.toggle("hidden");
   contentDeleteBtn.classList.toggle("hidden");
-});
+}
 
-deleteConfirmCancelBtn.addEventListener("click", () => {
-  deleteConfirm.classList.toggle("hidden");
-  contentDeleteBtn.classList.toggle("hidden");
-});
+contentDeleteBtn.addEventListener("click", toggleDeleteConfirm);
+deleteConfirmCancelBtn.addEventListener("click", toggleDeleteConfirm);
 
-// モーダルの開閉
 openAddDialogBtn.addEventListener("click", () => {
   addDialog.showModal();
   contentImagePath = null;

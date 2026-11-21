@@ -118,10 +118,6 @@ input:focus {
   transform: rotate(-2deg);
 }
 
-.work-count {
-  font: var() 12px var(--font-body);
-}
-
 /* メイン */
 main {
   overflow: auto;

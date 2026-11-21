@@ -41,6 +41,12 @@ input.addEventListener("input", () => {
   contentImagePath = null;
 });
 
+// 保存と表示
+function saveAndDisplay() {
+  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
+  renderList();
+}
+
 // フォームに入力されたものを保存
 form.addEventListener("submit", (event) => {
   event.preventDefault(); // フォームのページリロードを無効
@@ -65,12 +71,6 @@ form.addEventListener("submit", (event) => {
     contentImagePath = null;
   }
 });
-
-// 保存と表示
-function saveAndDisplay() {
-  localStorage.setItem("Records", JSON.stringify(anirackContentRecords));
-  renderList();
-}
 
 // 検索ボタン
 searchBtn.addEventListener("click", async () => {

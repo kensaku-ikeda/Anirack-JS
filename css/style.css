@@ -377,6 +377,33 @@ form {
   background-color: var(--color-yellow);
 }
 
+.search-status {
+  padding: var(--space-3);
+  font-size: 12px;
+  line-height: 1.6;
+  margin: var(--space-3) 0;
+}
+
+.search-status:empty {
+  display: none;
+}
+
+.search-status.is-empty {
+  border: 2px dashed var(--color-ink);
+  font-weight: 700;
+  text-align: center;
+}
+
+.search-status.is-error {
+  border: var(--border-m);
+  font-family: var(--font-body-bold);
+  color: var(--color-error);
+}
+
+.search-status.is-loading {
+  border: 3px solid var(--color-dot);
+}
+
 .btn-tap-size {
   width: var(--tap);
   height: var(--tap);

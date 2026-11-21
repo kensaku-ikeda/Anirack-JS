@@ -153,9 +153,11 @@ form.addEventListener("submit", (event) => {
 
 // AniList APIで作品を検索し、検索結果を表示する
 searchBtn.addEventListener("click", async () => {
+  searchStatus.textContent = "";
+  searchStatus.classList.add("hidden");
   searchResults.textContent = "";
   searchResults.classList.add("hidden");
-  searchStatus.classList.add("hidden");
+  searchStatus.classList.remove("is-empty", "is-error");
   searchCount.textContent = "";
   contentImagePath = null;
   const selectedSearchTypebtn = document.querySelector(
@@ -165,8 +167,11 @@ searchBtn.addEventListener("click", async () => {
   if (input.value === "") {
     setInputValidity(input);
   } else {
+    searchStatus.classList.remove("hidden");
     searchBtn.disabled = true;
     searchBtn.textContent = "検索中...";
+    searchStatus.classList.add("is-loading");
+    searchStatus.textContent = "探しています・・・";
     try {
       const response = await fetch("https://graphql.anilist.co", {
         method: "POST",
@@ -181,6 +186,8 @@ searchBtn.addEventListener("click", async () => {
           },
         }),
       });
+      searchStatus.textContent = "";
+      searchStatus.classList.remove("is-loading");
       const json = await response.json();
       const mediaData = json.data.Page.media;
       const mediaCount = mediaData.length;
@@ -189,6 +196,7 @@ searchBtn.addEventListener("click", async () => {
         searchStatus.classList.remove("hidden");
         searchStatus.textContent =
           "見つかりませんでした。そのまま手で入力して保存できます";
+        searchStatus.classList.add("is-empty");
       } else {
         searchResults.classList.remove("hidden");
         mediaData.forEach((obj) => {
@@ -198,9 +206,10 @@ searchBtn.addEventListener("click", async () => {
       }
     } catch (error) {
       console.error(error);
-      searchStatus.classList.remove("hidden");
+      searchStatus.classList.remove("hidden", "is-loading");
       searchStatus.textContent =
         "検索できませんでした。時間をおいて、もう一度お試しください";
+      searchStatus.classList.add("is-error");
     }
     searchBtn.disabled = false;
     searchBtn.textContent = "検索";

@@ -316,17 +316,18 @@ openAddDialogBtn.addEventListener("click", () => {
   contentImagePath = null;
 });
 
-addDialog.addEventListener("click", (event) => {
-  //暗い部分のみをクリックしたら閉じるようにする
-  if (event.target === addDialog) {
-    addDialog.close();
-  }
-});
-
 addCancelBtn.addEventListener("click", () => {
   addDialog.close();
 });
 
+addDialog.addEventListener("cancel", (event) => {
+  event.preventDefault();
+});
+
 editCancelBtn.addEventListener("click", () => {
   editDialog.close();
+});
+
+editDialog.addEventListener("cancel", (event) => {
+  event.preventDefault();
 });

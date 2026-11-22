@@ -35,24 +35,24 @@ const coversPerShelfRow = 3;
 let anirackContentRecords = [];
 
 const mediaSearchQuery = `query ($type: MediaType, $search: String) {
-        Page {
-          media (type: $type, search: $search, sort: POPULARITY_DESC) {
-            id
-            title {
-              native
-              english
-              romaji
-            }
-            coverImage {
-              medium
-            }
-            format
-            startDate{
-              year
-            }
-          }
-        }
-      }`;
+  Page {
+    media(type: $type, search: $search, sort: POPULARITY_DESC, isAdult: false) {
+      id
+      title {
+        native
+        english
+        romaji
+      }
+      coverImage {
+        medium
+      }
+      format
+      startDate {
+        year
+      }
+    }
+  }
+}`;
 
 // 間違った形式で入力しても、入力し直して保存できる
 input.addEventListener("input", () => {

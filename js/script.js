@@ -36,7 +36,7 @@ let anirackContentRecords = [];
 
 const mediaSearchQuery = `query ($type: MediaType, $search: String) {
         Page {
-          media (type: $type, search: $search) {
+          media (type: $type, search: $search, sort: POPULARITY_DESC) {
             id
             title {
               native

@@ -44,7 +44,7 @@ const mediaSearchQuery = `query ($type: MediaType, $search: String) {
         romaji
       }
       coverImage {
-        medium
+        large
       }
       format
       startDate {
@@ -103,10 +103,10 @@ function returnOneSearchList(obj) {
   formatSpan.classList.add("meta");
   seasonYearSpan.textContent = obj.startDate.year;
   seasonYearSpan.classList.add("meta");
-  if (obj.coverImage.medium == null) {
+  if (obj.coverImage.large == null) {
     img.classList.add("no-image");
   } else {
-    img.setAttribute("src", obj.coverImage.medium);
+    img.setAttribute("src", obj.coverImage.large);
   }
   titleSpan.classList.add("search-result-title");
   if (obj.startDate.year === null) {
@@ -114,7 +114,7 @@ function returnOneSearchList(obj) {
   }
   button.addEventListener("click", () => {
     input.value = titleSpan.textContent;
-    contentImagePath = obj.coverImage.medium;
+    contentImagePath = obj.coverImage.large;
   });
   return list;
 }
